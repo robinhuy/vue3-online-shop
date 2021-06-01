@@ -12,21 +12,13 @@
         <div class="wrap_menu">
           <nav class="menu">
             <ul class="main_menu">
-              <li class="sale-noti">
-                <router-link to="/">Home</router-link>
-              </li>
+              <MenuItem to="/" label="Home" />
 
-              <li>
-                <router-link to="/products">Products</router-link>
-              </li>
+              <MenuItem to="/products" label="Products" />
 
-              <li>
-                <router-link to="/about">About</router-link>
-              </li>
+              <MenuItem to="/about" label="About" />
 
-              <li>
-                <router-link to="/contact">Contact</router-link>
-              </li>
+              <MenuItem to="/contact" label="Contact" />
             </ul>
           </nav>
         </div>
@@ -290,8 +282,13 @@
 </template>
 
 <script>
+import MenuItem from "./MenuItem.vue";
+
 export default {
   name: "MainHeader",
+  components: {
+    MenuItem,
+  },
 };
 </script>
 
