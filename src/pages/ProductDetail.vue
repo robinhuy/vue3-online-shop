@@ -12,11 +12,6 @@
         <i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
       </router-link>
 
-      <a href="#" class="s-text16">
-        T-Shirt
-        <i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
-      </a>
-
       <span class="s-text17"> Boxy T-Shirt with Roll Sleeve Detail </span>
     </div>
 
@@ -25,7 +20,22 @@
       <div class="flex-w flex-sb">
         <div class="w-size13 p-t-30 respon5">
           <div class="wrap-slick3 flex-sb flex-w">
-            <div class="wrap-slick3-dots"></div>
+            <div class="wrap-slick3-dots">
+              <ul class="slick3-dots" role="tablist">
+                <li class="slick-active">
+                  <img :src="require('@/assets/images/thumb-item-01.jpg')" />
+                  <div class="slick3-dot-overlay"></div>
+                </li>
+                <li>
+                  <img :src="require('@/assets/images/thumb-item-02.jpg')" />
+                  <div class="slick3-dot-overlay"></div>
+                </li>
+                <li>
+                  <img :src="require('@/assets/images/thumb-item-03.jpg')" />
+                  <div class="slick3-dot-overlay"></div>
+                </li>
+              </ul>
+            </div>
 
             <div class="slick3">
               <div
@@ -35,30 +45,6 @@
                 <div class="wrap-pic-w">
                   <img
                     src="@/assets/images/product-detail-01.jpg"
-                    alt="IMG-PRODUCT"
-                  />
-                </div>
-              </div>
-
-              <div
-                class="item-slick3"
-                data-thumb="@/assets/images/thumb-item-02.jpg"
-              >
-                <div class="wrap-pic-w">
-                  <img
-                    src="@/assets/images/product-detail-02.jpg"
-                    alt="IMG-PRODUCT"
-                  />
-                </div>
-              </div>
-
-              <div
-                class="item-slick3"
-                data-thumb="@/assets/images/thumb-item-03.jpg"
-              >
-                <div class="wrap-pic-w">
-                  <img
-                    src="@/assets/images/product-detail-03.jpg"
                     alt="IMG-PRODUCT"
                   />
                 </div>
@@ -79,33 +65,20 @@
             Mauris consequat ornare feugiat.
           </p>
 
-          <!--  -->
           <div class="p-t-33 p-b-60">
             <div class="flex-m flex-w p-b-10">
               <div class="s-text15 w-size15 t-center">Size</div>
 
-              <div class="rs2-select2 rs3-select2 bo4 of-hidden w-size16">
-                <select class="selection-2" name="size">
-                  <option>Choose an option</option>
-                  <option>Size S</option>
-                  <option>Size M</option>
-                  <option>Size L</option>
-                  <option>Size XL</option>
-                </select>
+              <div class="w-size16">
+                <Select2 :selected="size.selected" :options="size.options" />
               </div>
             </div>
 
             <div class="flex-m flex-w">
               <div class="s-text15 w-size15 t-center">Color</div>
 
-              <div class="rs2-select2 rs3-select2 bo4 of-hidden w-size16">
-                <select class="selection-2" name="color">
-                  <option>Choose an option</option>
-                  <option>Gray</option>
-                  <option>Red</option>
-                  <option>Black</option>
-                  <option>Blue</option>
-                </select>
+              <div class="w-size16">
+                 <Select2 :selected="color.selected" :options="color.options" />
               </div>
             </div>
 
@@ -228,15 +201,19 @@
         </div>
 
         <!-- Slide2 -->
-        <div class="wrap-slick2">
-          <div class="slick2">
+        <Carousel :items-to-show="4" :itemsToScroll="4">
+          <Slide v-for="product in relatedProducts" :key="product.id">
             <div class="item-slick2 p-l-15 p-r-15">
               <!-- Block2 -->
               <div class="block2">
                 <div
-                  class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew"
+                  class="block2-img wrap-pic-w of-hidden pos-relative"
+                  :class="{
+                    'block2-labelnew': product.isNew,
+                    'block2-labelsale': product.isSale,
+                  }"
                 >
-                  <img src="@/assets/images/item-02.jpg" alt="IMG-PRODUCT" />
+                  <img :src="product.image" alt="IMG-PRODUCT" />
 
                   <div class="block2-overlay trans-0-4">
                     <a
@@ -269,347 +246,114 @@
                     to="/products/1"
                     class="block2-name dis-block s-text3 p-b-5"
                   >
-                    Herschel supply co 25l
+                    {{ product.name }}
                   </router-link>
 
-                  <span class="block2-price m-text6 p-r-5"> $75.00 </span>
+                  <span class="block2-price m-text6 p-r-5">
+                    ${{ product.price }}
+                  </span>
                 </div>
               </div>
             </div>
+          </Slide>
 
-            <div class="item-slick2 p-l-15 p-r-15">
-              <!-- Block2 -->
-              <div class="block2">
-                <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                  <img src="@/assets/images/item-03.jpg" alt="IMG-PRODUCT" />
-
-                  <div class="block2-overlay trans-0-4">
-                    <a
-                      href="#"
-                      class="block2-btn-addwishlist hov-pointer trans-0-4"
-                    >
-                      <i
-                        class="icon-wishlist icon_heart_alt"
-                        aria-hidden="true"
-                      ></i>
-                      <i
-                        class="icon-wishlist icon_heart dis-none"
-                        aria-hidden="true"
-                      ></i>
-                    </a>
-
-                    <div class="block2-btn-addcart w-size1 trans-0-4">
-                      <!-- Button -->
-                      <button
-                        class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4"
-                      >
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="block2-txt p-t-20">
-                  <router-link
-                    to="/products/1"
-                    class="block2-name dis-block s-text3 p-b-5"
-                  >
-                    Denim jacket blue
-                  </router-link>
-
-                  <span class="block2-price m-text6 p-r-5"> $92.50 </span>
-                </div>
-              </div>
-            </div>
-
-            <div class="item-slick2 p-l-15 p-r-15">
-              <!-- Block2 -->
-              <div class="block2">
-                <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                  <img src="@/assets/images/item-05.jpg" alt="IMG-PRODUCT" />
-
-                  <div class="block2-overlay trans-0-4">
-                    <a
-                      href="#"
-                      class="block2-btn-addwishlist hov-pointer trans-0-4"
-                    >
-                      <i
-                        class="icon-wishlist icon_heart_alt"
-                        aria-hidden="true"
-                      ></i>
-                      <i
-                        class="icon-wishlist icon_heart dis-none"
-                        aria-hidden="true"
-                      ></i>
-                    </a>
-
-                    <div class="block2-btn-addcart w-size1 trans-0-4">
-                      <!-- Button -->
-                      <button
-                        class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4"
-                      >
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="block2-txt p-t-20">
-                  <router-link
-                    to="/products/1"
-                    class="block2-name dis-block s-text3 p-b-5"
-                  >
-                    Coach slim easton black
-                  </router-link>
-
-                  <span class="block2-price m-text6 p-r-5"> $165.90 </span>
-                </div>
-              </div>
-            </div>
-
-            <div class="item-slick2 p-l-15 p-r-15">
-              <!-- Block2 -->
-              <div class="block2">
-                <div
-                  class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale"
-                >
-                  <img src="@/assets/images/item-07.jpg" alt="IMG-PRODUCT" />
-
-                  <div class="block2-overlay trans-0-4">
-                    <a
-                      href="#"
-                      class="block2-btn-addwishlist hov-pointer trans-0-4"
-                    >
-                      <i
-                        class="icon-wishlist icon_heart_alt"
-                        aria-hidden="true"
-                      ></i>
-                      <i
-                        class="icon-wishlist icon_heart dis-none"
-                        aria-hidden="true"
-                      ></i>
-                    </a>
-
-                    <div class="block2-btn-addcart w-size1 trans-0-4">
-                      <!-- Button -->
-                      <button
-                        class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4"
-                      >
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="block2-txt p-t-20">
-                  <router-link
-                    to="/products/1"
-                    class="block2-name dis-block s-text3 p-b-5"
-                  >
-                    Frayed denim shorts
-                  </router-link>
-
-                  <span class="block2-oldprice m-text7 p-r-5"> $29.50 </span>
-
-                  <span class="block2-newprice m-text8 p-r-5"> $15.90 </span>
-                </div>
-              </div>
-            </div>
-
-            <div class="item-slick2 p-l-15 p-r-15">
-              <!-- Block2 -->
-              <div class="block2">
-                <div
-                  class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew"
-                >
-                  <img src="@/assets/images/item-02.jpg" alt="IMG-PRODUCT" />
-
-                  <div class="block2-overlay trans-0-4">
-                    <a
-                      href="#"
-                      class="block2-btn-addwishlist hov-pointer trans-0-4"
-                    >
-                      <i
-                        class="icon-wishlist icon_heart_alt"
-                        aria-hidden="true"
-                      ></i>
-                      <i
-                        class="icon-wishlist icon_heart dis-none"
-                        aria-hidden="true"
-                      ></i>
-                    </a>
-
-                    <div class="block2-btn-addcart w-size1 trans-0-4">
-                      <!-- Button -->
-                      <button
-                        class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4"
-                      >
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="block2-txt p-t-20">
-                  <router-link
-                    to="/products/1"
-                    class="block2-name dis-block s-text3 p-b-5"
-                  >
-                    Herschel supply co 25l
-                  </router-link>
-
-                  <span class="block2-price m-text6 p-r-5"> $75.00 </span>
-                </div>
-              </div>
-            </div>
-
-            <div class="item-slick2 p-l-15 p-r-15">
-              <!-- Block2 -->
-              <div class="block2">
-                <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                  <img src="@/assets/images/item-03.jpg" alt="IMG-PRODUCT" />
-
-                  <div class="block2-overlay trans-0-4">
-                    <a
-                      href="#"
-                      class="block2-btn-addwishlist hov-pointer trans-0-4"
-                    >
-                      <i
-                        class="icon-wishlist icon_heart_alt"
-                        aria-hidden="true"
-                      ></i>
-                      <i
-                        class="icon-wishlist icon_heart dis-none"
-                        aria-hidden="true"
-                      ></i>
-                    </a>
-
-                    <div class="block2-btn-addcart w-size1 trans-0-4">
-                      <!-- Button -->
-                      <button
-                        class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4"
-                      >
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="block2-txt p-t-20">
-                  <router-link
-                    to="/products/1"
-                    class="block2-name dis-block s-text3 p-b-5"
-                  >
-                    Denim jacket blue
-                  </router-link>
-
-                  <span class="block2-price m-text6 p-r-5"> $92.50 </span>
-                </div>
-              </div>
-            </div>
-
-            <div class="item-slick2 p-l-15 p-r-15">
-              <!-- Block2 -->
-              <div class="block2">
-                <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                  <img src="@/assets/images/item-05.jpg" alt="IMG-PRODUCT" />
-
-                  <div class="block2-overlay trans-0-4">
-                    <a
-                      href="#"
-                      class="block2-btn-addwishlist hov-pointer trans-0-4"
-                    >
-                      <i
-                        class="icon-wishlist icon_heart_alt"
-                        aria-hidden="true"
-                      ></i>
-                      <i
-                        class="icon-wishlist icon_heart dis-none"
-                        aria-hidden="true"
-                      ></i>
-                    </a>
-
-                    <div class="block2-btn-addcart w-size1 trans-0-4">
-                      <!-- Button -->
-                      <button
-                        class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4"
-                      >
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="block2-txt p-t-20">
-                  <router-link
-                    to="/products/1"
-                    class="block2-name dis-block s-text3 p-b-5"
-                  >
-                    Coach slim easton black
-                  </router-link>
-
-                  <span class="block2-price m-text6 p-r-5"> $165.90 </span>
-                </div>
-              </div>
-            </div>
-
-            <div class="item-slick2 p-l-15 p-r-15">
-              <!-- Block2 -->
-              <div class="block2">
-                <div
-                  class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale"
-                >
-                  <img src="@/assets/images/item-07.jpg" alt="IMG-PRODUCT" />
-
-                  <div class="block2-overlay trans-0-4">
-                    <a
-                      href="#"
-                      class="block2-btn-addwishlist hov-pointer trans-0-4"
-                    >
-                      <i
-                        class="icon-wishlist icon_heart_alt"
-                        aria-hidden="true"
-                      ></i>
-                      <i
-                        class="icon-wishlist icon_heart dis-none"
-                        aria-hidden="true"
-                      ></i>
-                    </a>
-
-                    <div class="block2-btn-addcart w-size1 trans-0-4">
-                      <!-- Button -->
-                      <button
-                        class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4"
-                      >
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="block2-txt p-t-20">
-                  <router-link
-                    to="/products/1"
-                    class="block2-name dis-block s-text3 p-b-5"
-                  >
-                    Frayed denim shorts
-                  </router-link>
-
-                  <span class="block2-oldprice m-text7 p-r-5"> $29.50 </span>
-
-                  <span class="block2-newprice m-text8 p-r-5"> $15.90 </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+          <template #addons>
+            <Navigation />
+          </template>
+        </Carousel>
       </div>
     </section>
   </div>
 </template>
 
 <script>
+import "vue3-carousel/dist/carousel.css";
+import { Carousel, Slide, Navigation } from "vue3-carousel";
+import Select2 from "@/components/Select2.vue";
+
 export default {
   name: "ProductDetail",
+  components: {
+    Carousel,
+    Slide,
+    Navigation,
+    Select2,
+  },
+  data() {
+    return {
+      size: {
+        selected: { value: "", label: "Choose an option" },
+        options: [
+          { value: "", label: "Choose an option" },
+          { value: "s", label: "Size S" },
+          { value: "m", label: "Size M" },
+          { value: "l", label: "Size L" },
+          { value: "xl", label: "Size XL" },
+        ],
+      },
+      color: {
+        selected: { value: "", label: "Choose an option" },
+        options: [
+          { value: "", label: "Choose an option" },
+          { value: "gray", label: "Gray" },
+          { value: "red", label: "Red" },
+          { value: "black", label: "Black" },
+          { value: "blue", label: "Blue" },
+        ],
+      },
+      relatedProducts: [
+        {
+          id: 1,
+          image: require("@/assets/images/item-02.jpg"),
+          name: "Herschel supply co 25l",
+          price: 75.0,
+          isNew: true,
+        },
+        {
+          id: 2,
+          image: require("@/assets/images/item-03.jpg"),
+          name: "Denim jacket blue",
+          price: 92.5,
+        },
+        {
+          id: 3,
+          image: require("@/assets/images/item-04.jpg"),
+          name: "Coach slim easton black",
+          price: 165.9,
+        },
+        {
+          id: 4,
+          image: require("@/assets/images/item-05.jpg"),
+          name: "Frayed denim shorts",
+          price: 15.9,
+          isSale: true,
+        },
+        {
+          id: 5,
+          image: require("@/assets/images/item-02.jpg"),
+          name: "Herschel supply co 25l",
+          price: 75.0,
+        },
+        {
+          id: 6,
+          image: require("@/assets/images/item-03.jpg"),
+          name: "Denim jacket blue",
+          price: 92.5,
+        },
+        {
+          id: 7,
+          image: require("@/assets/images/item-04.jpg"),
+          name: "Coach slim easton black",
+          price: 165.9,
+        },
+        {
+          id: 8,
+          image: require("@/assets/images/item-05.jpg"),
+          name: "Frayed denim shorts",
+          price: 15.9,
+        },
+      ],
+    };
+  },
 };
 </script>
