@@ -8310,6 +8310,11 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha1-HuO8mhbsv1EYvjNLsV+cRvgvWCU=
 
+vue3-carousel@^0.1.21:
+  version "0.1.21"
+  resolved "https://registry.yarnpkg.com/vue3-carousel/-/vue3-carousel-0.1.21.tgz#0dfcf80a813ee01b9b76c4be825c0dbacffdf230"
+  integrity sha512-Ft6KiV+4fQ0qGVHsQ9l1posnU0tCKUuE7OBSt2Hspudh+cMJp4wvbvnX9DOPE6lSx9Gp33pn35nba/Y8wMWcwg==
+
 vue@^3.0.0:
   version "3.0.11"
   resolved "https://registry.nlark.com/vue/download/vue-3.0.11.tgz#c82f9594cbf4dcc869241d4c8dd3e08d9a8f4b5f"
