@@ -178,28 +178,28 @@
             <!--  -->
             <div class="flex-sb-m flex-w p-b-35">
               <div class="flex-w">
-                <div
-                  class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10"
-                >
-                  <select class="selection-2" name="sorting">
-                    <option>Default Sorting</option>
-                    <option>Popularity</option>
-                    <option>Price: low to high</option>
-                    <option>Price: high to low</option>
-                  </select>
+                <div class="bo4 w-size12 m-t-5 m-b-5 m-r-10">
+                  <Select2
+                    :options="[
+                      { value: '', label: 'Default Sorting' },
+                      { value: 'popularity', label: 'Popularity' },
+                      { value: 'price-asc', label: 'Price: low to high' },
+                      { value: 'price-desc', label: 'Price: high to low' },
+                    ]"
+                  />
                 </div>
 
-                <div
-                  class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10"
-                >
-                  <select class="selection-2" name="sorting">
-                    <option>Price</option>
-                    <option>$0.00 - $50.00</option>
-                    <option>$50.00 - $100.00</option>
-                    <option>$100.00 - $150.00</option>
-                    <option>$150.00 - $200.00</option>
-                    <option>$200.00+</option>
-                  </select>
+                <div class="bo4 w-size12 m-t-5 m-b-5 m-r-10">
+                  <Select2
+                    :options="[
+                      { value: '', label: 'Price' },
+                      { value: '0-50', label: '$0.00 - $50.00' },
+                      { value: '50-100', label: '$50.00 - $100.00' },
+                      { value: '100-150', label: '$100.00 - $150.00' },
+                      { value: '150-200', label: '$150.00 - $200.00' },
+                      { value: '200+', label: '$200.00+' },
+                    ]"
+                  />
                 </div>
               </div>
 
@@ -285,8 +285,13 @@
 </template>
 
 <script>
+import Select2 from "@/components/Select2.vue";
+
 export default {
   name: "Products",
+  components: {
+    Select2,
+  },
   data() {
     return {
       categories: [

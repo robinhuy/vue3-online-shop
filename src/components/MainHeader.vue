@@ -35,7 +35,7 @@
 
           <span class="linedivide1"></span>
 
-          <div class="header-wrapicon2">
+          <div class="header-wrapicon2" @click="toggleCartDropdown">
             <img
               src="@/assets/images/icons/icon-header-02.png"
               class="header-icon1 js-show-header-dropdown"
@@ -44,7 +44,10 @@
             <span class="header-icons-noti">0</span>
 
             <!-- Header cart noti -->
-            <div class="header-cart header-dropdown">
+            <div
+              class="header-cart header-dropdown"
+              :class="{ 'show-header-dropdown': isShowCartDropdown }"
+            >
               <ul class="header-cart-wrapitem">
                 <li class="header-cart-item">
                   <div class="header-cart-item-img">
@@ -139,7 +142,7 @@
 
           <span class="linedivide2"></span>
 
-          <div class="header-wrapicon2">
+          <div class="header-wrapicon2" @click="toggleCartDropdown">
             <img
               src="@/assets/images/icons/icon-header-02.png"
               class="header-icon1 js-show-header-dropdown"
@@ -148,7 +151,10 @@
             <span class="header-icons-noti">0</span>
 
             <!-- Header cart noti -->
-            <div class="header-cart header-dropdown">
+            <div
+              class="header-cart header-dropdown"
+              :class="{ 'show-header-dropdown': isShowCartDropdown }"
+            >
               <ul class="header-cart-wrapitem">
                 <li class="header-cart-item">
                   <div class="header-cart-item-img">
@@ -219,7 +225,11 @@
           </div>
         </div>
 
-        <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+        <div
+          class="btn-show-menu-mobile hamburger hamburger--squeeze"
+          :class="{ 'is-active': isShowMenuMobileDropdown }"
+          @click="toggleMenuMobileDropdown"
+        >
           <span class="hamburger-box">
             <span class="hamburger-inner"></span>
           </span>
@@ -228,7 +238,10 @@
     </div>
 
     <!-- Menu Mobile -->
-    <div class="wrap-side-menu">
+    <div
+      class="wrap-side-menu"
+      :style="{ display: isShowMenuMobileDropdown ? 'block' : 'none' }"
+    >
       <nav class="side-menu">
         <ul class="main-menu">
           <li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
@@ -242,10 +255,16 @@
               <span class="topbar-email"> fashe@example.com </span>
 
               <div class="topbar-language rs1-select2">
-                <select class="selection-1" name="time">
-                  <option>USD</option>
-                  <option>EUR</option>
-                </select>
+                <Select2
+                  :options="[
+                    { value: 'usd', label: 'USD' },
+                    { value: 'eur', label: 'EUR' },
+                  ]"
+                  :style="{
+                    border: 'none',
+                    marginLeft: '26px',
+                  }"
+                />
               </div>
             </div>
           </li>
@@ -260,19 +279,19 @@
             </div>
           </li>
 
-          <li class="item-menu-mobile">
+          <li class="item-menu-mobile" @click="closeMenuMobileDropdown">
             <router-link to="/">Home</router-link>
           </li>
 
-          <li class="item-menu-mobile">
+          <li class="item-menu-mobile" @click="closeMenuMobileDropdown">
             <router-link to="/products">Products</router-link>
           </li>
 
-          <li class="item-menu-mobile">
+          <li class="item-menu-mobile" @click="closeMenuMobileDropdown">
             <router-link to="/about">About</router-link>
           </li>
 
-          <li class="item-menu-mobile">
+          <li class="item-menu-mobile" @click="closeMenuMobileDropdown">
             <router-link to="/contact">Contact</router-link>
           </li>
         </ul>
@@ -283,14 +302,34 @@
 
 <script>
 import MenuItem from "./MenuItem.vue";
+import Select2 from "@/components/Select2.vue";
 
 export default {
   name: "MainHeader",
   components: {
     MenuItem,
+    Select2,
+  },
+  data() {
+    return {
+      language: {
+        selected: {},
+      },
+      isShowMenuMobileDropdown: false,
+      isShowCartDropdown: false,
+    };
+  },
+  methods: {
+    toggleMenuMobileDropdown() {
+      this.isShowMenuMobileDropdown = !this.isShowMenuMobileDropdown;
+    },
+    closeMenuMobileDropdown() {
+      this.isShowMenuMobileDropdown = false;
+    },
+    toggleCartDropdown() {
+      this.isShowCartDropdown = !this.isShowCartDropdown;
+    },
   },
 };
 </script>
 
-<style scoped>
-</style>

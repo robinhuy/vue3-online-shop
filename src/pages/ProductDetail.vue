@@ -69,7 +69,7 @@
               <div class="s-text15 w-size15 t-center">Size</div>
 
               <div class="w-size16">
-                <Select2 :selected="size.selected" :options="size.options" />
+                <Select2 :options="sizes" />
               </div>
             </div>
 
@@ -77,7 +77,7 @@
               <div class="s-text15 w-size15 t-center">Color</div>
 
               <div class="w-size16">
-                <Select2 :selected="color.selected" :options="color.options" />
+                <Select2 :options="colors" />
               </div>
             </div>
 
@@ -291,26 +291,21 @@ export default {
       },
       productImages: [],
       productQuantity: 1,
-      size: {
-        selected: { value: "", label: "Choose an option" },
-        options: [
-          { value: "", label: "Choose an option" },
-          { value: "s", label: "Size S" },
-          { value: "m", label: "Size M" },
-          { value: "l", label: "Size L" },
-          { value: "xl", label: "Size XL" },
-        ],
-      },
-      color: {
-        selected: { value: "", label: "Choose an option" },
-        options: [
-          { value: "", label: "Choose an option" },
-          { value: "gray", label: "Gray" },
-          { value: "red", label: "Red" },
-          { value: "black", label: "Black" },
-          { value: "blue", label: "Blue" },
-        ],
-      },
+      sizes: [
+        { value: "", label: "Choose an option" },
+        { value: "s", label: "Size S" },
+        { value: "m", label: "Size M" },
+        { value: "l", label: "Size L" },
+        { value: "xl", label: "Size XL" },
+      ],
+      colors: [
+        { value: "", label: "Choose an option" },
+        { value: "gray", label: "Gray" },
+        { value: "red", label: "Red" },
+        { value: "black", label: "Black" },
+        { value: "blue", label: "Blue" },
+      ],
+
       relatedProducts: [
         {
           id: 1,

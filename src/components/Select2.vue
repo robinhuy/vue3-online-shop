@@ -4,10 +4,11 @@
       class="selection"
       @click="toggleDropdown"
       @blur="closeDropdown"
+      :style="style"
       tabindex="0"
     >
       <span class="selection-label">
-        {{ localSelected.label }}
+        {{ selected.label }}
       </span>
 
       <span class="selection-arrow"
@@ -17,11 +18,11 @@
 
     <ul v-show="isShowDropdown" class="options">
       <li
-        v-for="option in localOptions"
+        v-for="option in selectOptions"
         :key="option.value"
         @mousedown="select(option)"
         class="option"
-        :class="{ selected: option.value === localSelected.value }"
+        :class="{ selected: option.value === selected.value }"
       >
         {{ option.label }}
       </li>
@@ -32,12 +33,12 @@
 <script>
 export default {
   name: "Select2",
-  props: ["selected", "options"],
+  props: ["options", "style"],
   data() {
     return {
       isShowDropdown: false,
-      localSelected: this.selected,
-      localOptions: this.options,
+      selected: this.options[0],
+      selectOptions: this.options,
     };
   },
   methods: {
@@ -45,7 +46,7 @@ export default {
       this.isShowDropdown = !this.isShowDropdown;
     },
     select(option) {
-      this.localSelected = option;
+      this.selected = option;
     },
     closeDropdown() {
       this.isShowDropdown = false;
@@ -73,6 +74,7 @@ export default {
   padding-left: 8px;
   padding-right: 20px;
   overflow: hidden;
+  color: #444;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -103,6 +105,7 @@ export default {
   position: absolute;
   top: 26px;
   left: 0;
+  z-index: 999;
   width: 100%;
   list-style: none;
   margin: 0;
@@ -115,7 +118,8 @@ export default {
   user-select: none;
   -webkit-user-select: none;
 }
-.option:hover {
+.option:hover,
+.option.selected {
   background-color: #e65540;
   color: #fff;
 }
