@@ -55,14 +55,13 @@
 
         <div class="w-size14 p-t-30 respon5">
           <h4 class="product-detail-name m-text16 p-b-13">
-            Boxy T-Shirt with Roll Sleeve Detail
+            {{ product.name }}
           </h4>
 
-          <span class="m-text17"> $22 </span>
+          <span class="m-text17"> ${{ product.price }} </span>
 
           <p class="s-text8 p-t-10">
-            Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula.
-            Mauris consequat ornare feugiat.
+            {{ product.shortDescription }}
           </p>
 
           <div class="p-t-33 p-b-60">
@@ -78,7 +77,7 @@
               <div class="s-text15 w-size15 t-center">Color</div>
 
               <div class="w-size16">
-                 <Select2 :selected="color.selected" :options="color.options" />
+                <Select2 :selected="color.selected" :options="color.options" />
               </div>
             </div>
 
@@ -87,6 +86,7 @@
                 <div class="flex-w bo5 of-hidden m-r-22 m-t-10 m-b-10">
                   <button
                     class="btn-num-product-down color1 flex-c-m size7 bg8 eff2"
+                    @click="decreaseQuantity"
                   >
                     <i class="fs-12 fa fa-minus" aria-hidden="true"></i>
                   </button>
@@ -95,11 +95,12 @@
                     class="size8 m-text18 t-center num-product"
                     type="number"
                     name="num-product"
-                    value="1"
+                    v-model.number="productQuantity"
                   />
 
                   <button
                     class="btn-num-product-up color1 flex-c-m size7 bg8 eff2"
+                    @click="increaseQuantity"
                   >
                     <i class="fs-12 fa fa-plus" aria-hidden="true"></i>
                   </button>
@@ -120,7 +121,7 @@
           </div>
 
           <div class="p-b-45">
-            <span class="s-text8 m-r-35">SKU: MUG-01</span>
+            <span class="s-text8 m-r-35">SKU: {{ product.id }}</span>
             <span class="s-text8">Categories: Mug, Design</span>
           </div>
 
@@ -141,9 +142,7 @@
 
             <div class="dropdown-content dis-none p-t-15 p-b-23">
               <p class="s-text8">
-                Fusce ornare mi vel risus porttitor dignissim. Nunc eget risus
-                at ipsum blandit ornare vel sed velit. Proin gravida arcu nisl,
-                a dignissim mauris placerat
+                {{ product.description }}
               </p>
             </div>
           </div>
@@ -281,6 +280,17 @@ export default {
   },
   data() {
     return {
+      product: {
+        id: "MUG-01",
+        name: "Boxy T-Shirt with Roll Sleeve Detail",
+        shortDescription:
+          "Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.",
+        description:
+          "Fusce ornare mi vel risus porttitor dignissim. Nunc eget risus at ipsum blandit ornare vel sed velit. Proin gravida arcu nisl, a dignissim mauris placerat",
+        price: 22,
+      },
+      productImages: [],
+      productQuantity: 1,
       size: {
         selected: { value: "", label: "Choose an option" },
         options: [
@@ -354,6 +364,19 @@ export default {
         },
       ],
     };
+  },
+  watch: {
+    productQuantity(value) {
+      if (value < 1) this.productQuantity = 1;
+    },
+  },
+  methods: {
+    decreaseQuantity() {
+      if (this.productQuantity > 1) this.productQuantity--;
+    },
+    increaseQuantity() {
+      this.productQuantity++;
+    },
   },
 };
 </script>
