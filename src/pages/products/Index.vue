@@ -268,15 +268,7 @@
               </div>
             </div>
 
-            <!-- Pagination -->
-            <div class="pagination flex-m flex-w p-t-26">
-              <a
-                href="#"
-                class="item-pagination flex-c-m trans-0-4 active-pagination"
-                >1</a
-              >
-              <a href="#" class="item-pagination flex-c-m trans-0-4">2</a>
-            </div>
+            <Pagination />
           </div>
         </div>
       </div>
@@ -286,11 +278,13 @@
 
 <script>
 import Select2 from "@/components/Select2.vue";
+import Pagination from "@/components/Pagination.vue";
 
 export default {
   name: "Products",
   components: {
     Select2,
+    Pagination
   },
   data() {
     return {
