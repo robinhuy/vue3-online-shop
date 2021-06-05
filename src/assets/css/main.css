@@ -493,7 +493,7 @@ iframe {
 ///////////////////////////////////////////////////////////
 */
 .header1 {
-  height: 125px;
+  height: 80px;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   -moz-transition: all 0.3s;
@@ -1089,7 +1089,6 @@ li.sale-noti > a {
 
 .side-menu .sub-menu > li {
   padding-left: 12px;
-  padding-top: ;
 }
 
 .side-menu .sub-menu a:hover {
