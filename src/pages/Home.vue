@@ -13,7 +13,12 @@
               }"
             >
               <div
-                class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170"
+                class="
+                  wrap-content-slide1
+                  sizefull
+                  flex-col-c-m
+                  p-l-15 p-r-15 p-t-150 p-b-170
+                "
               >
                 <span class="caption1-slide1 m-text1 t-center animated m-b-15">
                   Women Collection 2018
@@ -27,7 +32,15 @@
                   <!-- Button -->
                   <router-link
                     to="/products"
-                    class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4"
+                    class="
+                      flex-c-m
+                      size2
+                      bo-rad-23
+                      s-text2
+                      bgwhite
+                      hov1
+                      trans-0-4
+                    "
                   >
                     Shop Now
                   </router-link>
@@ -146,7 +159,24 @@
         </div>
 
         <!-- Slide2 -->
-        <Carousel :items-to-show="4" :itemsToScroll="4">
+        <Carousel
+          :items-to-show="1"
+          :itemsToScroll="1"
+          :breakpoints="{
+            576: {
+              itemsToShow: 2,
+              itemsToScroll: 2,
+            },
+            768: {
+              itemsToShow: 3,
+              itemsToScroll: 3,
+            },
+            992: {
+              itemsToShow: 4,
+              itemsToScroll: 4,
+            },
+          }"
+        >
           <Slide v-for="product in featuredProducts" :key="product.id">
             <div class="item-slick2 p-l-15 p-r-15">
               <!-- Block2 -->
@@ -178,7 +208,15 @@
                     <div class="block2-btn-addcart w-size1 trans-0-4">
                       <!-- Button -->
                       <button
-                        class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4"
+                        class="
+                          flex-c-m
+                          size1
+                          bg4
+                          bo-rad-23
+                          hov1
+                          s-text1
+                          trans-0-4
+                        "
                       >
                         Add to Cart
                       </button>
@@ -222,7 +260,13 @@
 
           <a href="#" class="block4-overlay sizefull ab-t-l trans-0-4">
             <span
-              class="block4-overlay-heart s-text9 flex-m trans-0-4 p-l-40 p-t-25"
+              class="
+                block4-overlay-heart
+                s-text9
+                flex-m
+                trans-0-4
+                p-l-40 p-t-25
+              "
             >
               <i class="icon_heart_alt fs-20 p-r-12" aria-hidden="true"></i>
               <span class="p-t-2">39</span>
@@ -247,7 +291,13 @@
 
           <a href="#" class="block4-overlay sizefull ab-t-l trans-0-4">
             <span
-              class="block4-overlay-heart s-text9 flex-m trans-0-4 p-l-40 p-t-25"
+              class="
+                block4-overlay-heart
+                s-text9
+                flex-m
+                trans-0-4
+                p-l-40 p-t-25
+              "
             >
               <i class="icon_heart_alt fs-20 p-r-12" aria-hidden="true"></i>
               <span class="p-t-2">39</span>
@@ -272,7 +322,13 @@
 
           <a href="#" class="block4-overlay sizefull ab-t-l trans-0-4">
             <span
-              class="block4-overlay-heart s-text9 flex-m trans-0-4 p-l-40 p-t-25"
+              class="
+                block4-overlay-heart
+                s-text9
+                flex-m
+                trans-0-4
+                p-l-40 p-t-25
+              "
             >
               <i class="icon_heart_alt fs-20 p-r-12" aria-hidden="true"></i>
               <span class="p-t-2">39</span>
@@ -297,7 +353,13 @@
 
           <a href="#" class="block4-overlay sizefull ab-t-l trans-0-4">
             <span
-              class="block4-overlay-heart s-text9 flex-m trans-0-4 p-l-40 p-t-25"
+              class="
+                block4-overlay-heart
+                s-text9
+                flex-m
+                trans-0-4
+                p-l-40 p-t-25
+              "
             >
               <i class="icon_heart_alt fs-20 p-r-12" aria-hidden="true"></i>
               <span class="p-t-2">39</span>
@@ -322,7 +384,13 @@
 
           <a href="#" class="block4-overlay sizefull ab-t-l trans-0-4">
             <span
-              class="block4-overlay-heart s-text9 flex-m trans-0-4 p-l-40 p-t-25"
+              class="
+                block4-overlay-heart
+                s-text9
+                flex-m
+                trans-0-4
+                p-l-40 p-t-25
+              "
             >
               <i class="icon_heart_alt fs-20 p-r-12" aria-hidden="true"></i>
               <span class="p-t-2">39</span>
@@ -446,3 +514,15 @@ export default {
   },
 };
 </script>
+
+<style>
+.carousel__prev,
+.carousel__next {
+  background-color: transparent;
+  font-size: 40px;
+  top: calc((100% - 70px) / 2);
+}
+.carousel__icon {
+  color: #ccc;
+}
+</style>
