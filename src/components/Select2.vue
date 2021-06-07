@@ -33,11 +33,12 @@
 <script>
 export default {
   name: "Select2",
-  props: ["options", "style"],
+  props: ["modelValue", "options", "style"],
+  emits: ["update:modelValue", "change"],
   data() {
     return {
       isShowDropdown: false,
-      selected: this.options[0],
+      selected: this.modelValue || this.options[0],
       selectOptions: this.options,
     };
   },
@@ -47,6 +48,8 @@ export default {
     },
     select(option) {
       this.selected = option;
+      this.$emit("update:modelValue", option);
+      this.$emit("change", option);
     },
     closeDropdown() {
       this.isShowDropdown = false;

@@ -25,9 +25,9 @@
               <div class="flex-w">
                 <div class="bo4 w-size12 m-t-5 m-b-5 m-r-10">
                   <Select2
+                    @change="sortProducts"
                     :options="[
-                      { value: '', label: 'Default Sorting' },
-                      { value: 'popularity', label: 'Popularity' },
+                      { value: 'id-desc', label: 'Default Sorting' },
                       { value: 'price-asc', label: 'Price: low to high' },
                       { value: 'price-desc', label: 'Price: high to low' },
                     ]"
@@ -126,7 +126,7 @@
               </div>
             </div>
 
-            <Pagination />
+            <Pagination :length="100" :pageSize="10" @change="changePage" />
           </div>
         </div>
       </div>
@@ -135,7 +135,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapState, mapActions } from "vuex";
 import Select2 from "@/components/Select2.vue";
 import Pagination from "@/components/Pagination.vue";
 import LeftBar from "./LeftBar.vue";
@@ -149,20 +149,27 @@ export default {
   },
   data() {
     return {
-      isLoading: true,
-      products: [],
+      sorting: { value: "", label: "Price" },
     };
   },
-  mounted() {
-    axios
-      .get("http://localhost:3000/products")
-      .then((response) => {
-        this.products = response.data[0];
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => (this.isLoading = false));
+  computed: mapState("products", ["products", "isLoading"]),
+  created() {
+    this.$store.dispatch("products/getProducts", {});
+  },
+  methods: {
+    ...mapActions("products", ["getProducts"]),
+
+    sortProducts(option) {
+      console.log(option);
+      const options = option.value.split("-");
+      const sort = options[0],
+        order = options[1];
+
+      this.$store.dispatch("products/getProducts", { sort, order });
+    },
+    changePage(pageIndex) {
+      this.$store.dispatch("products/getProducts", { pageIndex });
+    },
   },
 };
 </script>

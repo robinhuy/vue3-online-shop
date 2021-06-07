@@ -17,8 +17,8 @@
       <div class="wra-filter-bar">
         <VueSlider
           v-model="priceRange"
-          min="50"
-          max="200"
+          :min="50"
+          :max="200"
           tooltip="none"
           :dotOptions="{
             style: {
