@@ -4,13 +4,26 @@ const state = () => ({
   products: [],
   isLoading: false,
   pageIndex: 1,
-  limit: 2,
+  limit: 4,
   sort: "id",
   order: "desc",
   search: "",
+  totalItems: 0,
 });
 
-const getters = {};
+const getters = {
+  sortDropdownValue(state) {
+    return state.sort + "-" + state.order;
+  },
+  itemStartIndex(state) {
+    return (state.pageIndex - 1) * state.limit + 1;
+  },
+  itemEndIndex(state) {
+    let index = state.pageIndex * state.limit;
+    if (index > state.totalItems) index = state.totalItems;
+    return index;
+  },
+};
 
 const actions = {
   async getProducts(
@@ -23,9 +36,9 @@ const actions = {
     if (limit) commit("setLimit", limit);
     if (sort) commit("setSort", sort);
     if (order) commit("setOrder", order);
-    if (search) commit("setSearch", search);
+    if (search !== undefined) commit("setSearch", search);
 
-    const products = await api.getProducts({
+    const response = await api.getProducts({
       page: state.pageIndex,
       limit: state.limit,
       sort: state.sort,
@@ -33,7 +46,7 @@ const actions = {
       search: state.search,
     });
 
-    commit("setProducts", products);
+    commit("setProducts", response);
     commit("setLoading", false);
   },
 };
@@ -42,8 +55,9 @@ const mutations = {
   setLoading(state, status) {
     state.isLoading = status;
   },
-  setProducts(state, products) {
-    state.products = products;
+  setProducts(state, response) {
+    state.products = response.data;
+    state.totalItems = +response.totalItems;
   },
   setPageIndex(state, pageIndex) {
     state.pageIndex = pageIndex;

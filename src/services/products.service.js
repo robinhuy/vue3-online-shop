@@ -9,7 +9,10 @@ export default {
         `${API_DOMAIN}/products?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}&q=${search}`
       )
       .then((response) => {
-        return response.data;
+        return {
+          totalItems: response.headers["x-total-count"],
+          data: response.data,
+        };
       });
   },
 };

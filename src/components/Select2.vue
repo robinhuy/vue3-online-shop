@@ -8,7 +8,7 @@
       tabindex="0"
     >
       <span class="selection-label">
-        {{ selected.label }}
+        {{ label }}
       </span>
 
       <span class="selection-arrow"
@@ -18,11 +18,11 @@
 
     <ul v-show="isShowDropdown" class="options">
       <li
-        v-for="option in selectOptions"
+        v-for="option in options"
         :key="option.value"
         @mousedown="select(option)"
         class="option"
-        :class="{ selected: option.value === selected.value }"
+        :class="{ selected: option.value === value }"
       >
         {{ option.label }}
       </li>
@@ -33,23 +33,27 @@
 <script>
 export default {
   name: "Select2",
-  props: ["modelValue", "options", "style"],
-  emits: ["update:modelValue", "change"],
+  props: ["value", "options", "style"],
+  emits: ["change"],
   data() {
     return {
       isShowDropdown: false,
-      selected: this.modelValue || this.options[0],
-      selectOptions: this.options,
     };
+  },
+  computed: {
+    label() {
+      return (
+        this.options.find((option) => option.value === this.value)?.label ||
+        this.options[0].label
+      );
+    },
   },
   methods: {
     toggleDropdown() {
       this.isShowDropdown = !this.isShowDropdown;
     },
-    select(option) {
-      this.selected = option;
-      this.$emit("update:modelValue", option);
-      this.$emit("change", option);
+    select(value) {
+      this.$emit("change", value);
     },
     closeDropdown() {
       this.isShowDropdown = false;

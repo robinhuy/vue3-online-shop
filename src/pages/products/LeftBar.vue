@@ -127,11 +127,15 @@
       <input
         class="s-text7 size6 p-l-23 p-r-50"
         type="text"
-        name="search-product"
         placeholder="Search Products..."
+        v-model="searchKeyword"
+        @keypress.enter="searchProducts"
       />
 
-      <button class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4">
+      <button
+        class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4"
+        @click="searchProducts"
+      >
         <i class="fs-12 fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
@@ -139,6 +143,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import VueSlider from "vue-slider-component";
 import "vue-slider-component/theme/default.css";
 
@@ -172,12 +177,25 @@ export default {
         },
       ],
       priceRange: [50, 200],
+      searchKeyword: "",
     };
   },
   computed: {
     priceRangeDisplay() {
       const prices = this.priceRange;
       return `$${prices[0]} - $${prices[1]}`;
+    },
+    ...mapState("products", ["search"]),
+  },
+  created() {
+    this.searchKeyword = this.search;
+  },
+  methods: {
+    searchProducts() {
+      this.$store.dispatch("products/getProducts", {
+        pageIndex: 1,
+        search: this.searchKeyword,
+      });
     },
   },
 };

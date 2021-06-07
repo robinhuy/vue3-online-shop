@@ -25,12 +25,13 @@
               <div class="flex-w">
                 <div class="bo4 w-size12 m-t-5 m-b-5 m-r-10">
                   <Select2
-                    @change="sortProducts"
                     :options="[
                       { value: 'id-desc', label: 'Default Sorting' },
                       { value: 'price-asc', label: 'Price: low to high' },
                       { value: 'price-desc', label: 'Price: high to low' },
                     ]"
+                    :value="sortDropdownValue"
+                    @change="sortProducts"
                   />
                 </div>
 
@@ -49,7 +50,8 @@
               </div>
 
               <span class="s-text8 p-t-5 p-b-5">
-                Showing 1–12 of 16 results
+                Showing {{ itemStartIndex }}–{{ itemEndIndex }} of
+                {{ totalItems }} results
               </span>
             </div>
 
@@ -126,7 +128,12 @@
               </div>
             </div>
 
-            <Pagination :length="100" :pageSize="10" @change="changePage" />
+            <Pagination
+              :length="totalItems"
+              :pageSize="limit"
+              :pageIndex="pageIndex"
+              @change="changePage"
+            />
           </div>
         </div>
       </div>
@@ -135,7 +142,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 import Select2 from "@/components/Select2.vue";
 import Pagination from "@/components/Pagination.vue";
 import LeftBar from "./LeftBar.vue";
@@ -147,12 +154,20 @@ export default {
     Pagination,
     LeftBar,
   },
-  data() {
-    return {
-      sorting: { value: "", label: "Price" },
-    };
+  computed: {
+    ...mapState("products", [
+      "isLoading",
+      "products",
+      "totalItems",
+      "pageIndex",
+      "limit",
+    ]),
+    ...mapGetters("products", [
+      "sortDropdownValue",
+      "itemStartIndex",
+      "itemEndIndex",
+    ]),
   },
-  computed: mapState("products", ["products", "isLoading"]),
   created() {
     this.$store.dispatch("products/getProducts", {});
   },
@@ -160,7 +175,6 @@ export default {
     ...mapActions("products", ["getProducts"]),
 
     sortProducts(option) {
-      console.log(option);
       const options = option.value.split("-");
       const sort = options[0],
         order = options[1];
