@@ -3,9 +3,11 @@ import api from "@/services/products.service";
 const state = () => ({
   products: [],
   product: {},
+  categories: [],
+  category: {},
   isLoading: false,
   pageIndex: 1,
-  limit: 4,
+  limit: 3,
   sort: "id",
   order: "desc",
   search: "",
@@ -29,7 +31,7 @@ const getters = {
 const actions = {
   async getProducts(
     { state, commit },
-    { pageIndex, limit, sort, order, search }
+    { pageIndex, limit, sort, order, search, category }
   ) {
     commit("setLoading", true);
 
@@ -38,6 +40,7 @@ const actions = {
     if (sort) commit("setSort", sort);
     if (order) commit("setOrder", order);
     if (search !== undefined) commit("setSearch", search);
+    if (category) commit("setCategory", category);
 
     const response = await api.getProducts({
       page: state.pageIndex,
@@ -45,10 +48,16 @@ const actions = {
       sort: state.sort,
       order: state.order,
       search: state.search,
+      categoryId: state.category.id,
     });
 
     commit("setProducts", response);
     commit("setLoading", false);
+  },
+
+  async getCategories({ commit }) {
+    const categories = await api.getCategories();
+    commit("setCategories", categories);
   },
 
   async getProductById({ commit }, productId) {
@@ -71,6 +80,12 @@ const mutations = {
   },
   setProduct(state, product) {
     state.product = product;
+  },
+  setCategories(state, categories) {
+    state.categories = categories;
+  },
+  setCategory(state, category) {
+    state.category = category;
   },
   setPageIndex(state, pageIndex) {
     state.pageIndex = pageIndex;

@@ -3,9 +3,24 @@
     <!--  -->
     <h4 class="m-text14 p-b-7">Categories</h4>
 
-    <ul class="p-b-54">
-      <li class="p-t-4" v-for="category in categories" :key="category.id">
-        <a href="#" class="s-text13">{{ category.name }}</a>
+    <ul class="p-b-54 categories">
+      <li class="p-t-4">
+        <a
+          href="#"
+          @click="filterProductsByCategory($event, {})"
+          class="s-text13"
+          :class="{ active: !category.id }"
+          >All</a
+        >
+      </li>
+      <li class="p-t-4" v-for="cat in categories" :key="cat.id">
+        <a
+          href="#"
+          @click="filterProductsByCategory($event, cat)"
+          class="s-text13"
+          :class="{ active: cat.id === category.id }"
+          >{{ cat.name }}</a
+        >
       </li>
     </ul>
 
@@ -154,28 +169,6 @@ export default {
   },
   data() {
     return {
-      categories: [
-        {
-          id: 1,
-          name: "All",
-        },
-        {
-          id: 2,
-          name: "Women",
-        },
-        {
-          id: 3,
-          name: "Men",
-        },
-        {
-          id: 4,
-          name: "Kids",
-        },
-        {
-          id: 5,
-          name: "Accesories",
-        },
-      ],
       priceRange: [50, 200],
       searchKeyword: "",
     };
@@ -185,12 +178,21 @@ export default {
       const prices = this.priceRange;
       return `$${prices[0]} - $${prices[1]}`;
     },
-    ...mapState("products", ["search"]),
+    ...mapState("products", ["search", "categories", "category"]),
   },
   created() {
     this.searchKeyword = this.search;
+    this.$store.dispatch("products/getCategories");
   },
   methods: {
+    filterProductsByCategory(event, category) {
+      event.preventDefault();
+
+      this.$store.dispatch("products/getProducts", {
+        pageIndex: 1,
+        category,
+      });
+    },
     searchProducts() {
       this.$store.dispatch("products/getProducts", {
         pageIndex: 1,
@@ -202,6 +204,9 @@ export default {
 </script>
 
 <style scoped>
+.categories .active {
+  color: #e65540;
+}
 .wra-filter-bar {
   margin: 0 6px;
 }
