@@ -49,7 +49,12 @@
                         bg8
                         eff2
                       "
-                      @click="decreaseQuantity(product.id)"
+                      @click="
+                        updateProductQuantity({
+                          productId: product.id,
+                          value: product.quantity - 1,
+                        })
+                      "
                     >
                       <i class="fs-12 fa fa-minus" aria-hidden="true"></i>
                     </button>
@@ -58,12 +63,23 @@
                       class="size8 m-text18 t-center num-product"
                       type="number"
                       name="num-product1"
-                      v-model.number="product.quantity"
+                      :value="product.quantity"
+                      @input="
+                        updateProductQuantity({
+                          productId: product.id,
+                          value: $event.target.value,
+                        })
+                      "
                     />
 
                     <button
                       class="btn-num-product-up color1 flex-c-m size7 bg8 eff2"
-                      @click="increaseQuantity(product.id)"
+                      @click="
+                        updateProductQuantity({
+                          productId: product.id,
+                          value: product.quantity + 1,
+                        })
+                      "
                     >
                       <i class="fs-12 fa fa-plus" aria-hidden="true"></i>
                     </button>
@@ -76,7 +92,7 @@
         </div>
 
         <div
-          class="flex-w flex-sb-m p-t-25 p-b-25 bo8 p-l-35 p-r-60 p-lr-15-sm"
+          class="flex-w flex-sb-m p-t-25 p-b-25 bo8 p-l-35 p-r-30 p-lr-15-sm"
         >
           <div class="flex-w flex-m w-full-sm">
             <div class="size11 bo4 m-r-10">
@@ -98,92 +114,38 @@
             </div>
           </div>
 
-          <div class="size10 trans-0-4 m-t-10 m-b-10">
-            <!-- Button -->
-            <button
-              class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4"
-              @click="updateCart"
-            >
-              Update Cart
-            </button>
+          <div>
+            <span class="s-text18 w-size19 w-full-sm"> Subtotal: </span>
+
+            <span class="m-text21 w-size20 w-full-sm"> ${{ subTotal }} </span>
           </div>
         </div>
 
         <!-- Total -->
-        <CartTotals :sub-total="subTotal" />
+        <CartTotals :subTotal="subTotal" />
       </div>
     </section>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations, mapGetters } from "vuex";
 import CartTotals from "./CartTotals.vue";
 
 export default {
   name: "Cart",
+
   components: {
     CartTotals,
   },
-  data() {
-    return {
-      products: [
-        {
-          id: 1,
-          image: require("@/assets/images/item-10.jpg"),
-          name: "Men Tshirt",
-          price: 36.0,
-          quantity: 1,
-          totalPrice: 36.0,
-        },
-        {
-          id: 2,
-          image: require("@/assets/images/item-05.jpg"),
-          name: "Mug Adventure",
-          price: 16.0,
-          quantity: 1,
-          totalPrice: 16.0,
-        },
-      ],
-      subTotal: 0,
-    };
+
+  computed: {
+    ...mapState("cart", ["products", "isLoading"]),
+    ...mapGetters("cart", ["subTotal"]),
   },
-  // computed: {
-  //   subTotal() {
-  //     return this.products.reduce(
-  //       (totalPrice, product) =>
-  //         (totalPrice + product.quantity * product.price),
-  //       0
-  //     );
-  //   },
-  // },
-  watch: {
-    products: {
-      handler(value) {
-        for (let product of value) {
-          if (product.quantity < 1) {
-            product.quantity = 1;
-          }
-          product.totalPrice = product.price * product.quantity;
-        }
-      },
-      deep: true,
-    },
-  },
+
   methods: {
-    decreaseQuantity(productId) {
-      let product = this.products.find((product) => product.id === productId);
-      if (product.quantity > 1) product.quantity--;
-    },
-    increaseQuantity(productId) {
-      let product = this.products.find((product) => product.id === productId);
-      product.quantity++;
-    },
-    updateCart() {
-      this.subTotal = this.products.reduce(
-        (totalPrice, product) => totalPrice + product.quantity * product.price,
-        0
-      );
-    },
+    ...mapMutations("cart", ["updateProductQuantity"]),
   },
 };
 </script>

@@ -8,11 +8,11 @@
       </router-link>
 
       <router-link to="/products" class="s-text16">
-        Women
+        Products
         <i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
       </router-link>
 
-      <span class="s-text17"> Boxy T-Shirt with Roll Sleeve Detail </span>
+      <span class="s-text17"> {{ product.name }} </span>
     </div>
 
     <!-- Product Detail -->
@@ -62,10 +62,6 @@
 
           <span class="m-text17"> ${{ product.price }} </span>
 
-          <p class="s-text8 p-t-10">
-            {{ product.shortDescription }}
-          </p>
-
           <div class="p-t-33 p-b-60">
             <div class="flex-m flex-w p-b-10">
               <div class="s-text15 w-size15 t-center">Size</div>
@@ -88,7 +84,7 @@
                 <div class="flex-w bo5 of-hidden m-r-22 m-t-10 m-b-10">
                   <button
                     class="btn-num-product-down color1 flex-c-m size7 bg8 eff2"
-                    @click="decreaseQuantity"
+                    @click="updateProductQuantity(product.quantity - 1)"
                   >
                     <i class="fs-12 fa fa-minus" aria-hidden="true"></i>
                   </button>
@@ -97,12 +93,13 @@
                     class="size8 m-text18 t-center num-product"
                     type="number"
                     name="num-product"
-                    v-model.number="productQuantity"
+                    :value="product.quantity"
+                    @input="updateProductQuantity($event.target.value)"
                   />
 
                   <button
                     class="btn-num-product-up color1 flex-c-m size7 bg8 eff2"
-                    @click="increaseQuantity"
+                    @click="updateProductQuantity(product.quantity + 1)"
                   >
                     <i class="fs-12 fa fa-plus" aria-hidden="true"></i>
                   </button>
@@ -116,7 +113,6 @@
                     m-t-10 m-b-10
                   "
                 >
-                  <!-- Button -->
                   <button
                     class="
                       flex-c-m
@@ -127,6 +123,7 @@
                       s-text1
                       trans-0-4
                     "
+                    @click="addProductToCart"
                   >
                     Add to Cart
                   </button>
@@ -154,7 +151,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import Select2 from "@/components/Select2.vue";
 import ProductsCarousel from "@/components/ProductsCarousel.vue";
 import DropdownContent from "./DropdownContent.vue";
@@ -191,12 +188,6 @@ export default {
 
   computed: mapState("products", ["products", "product", "isLoading"]),
 
-  watch: {
-    productQuantity(value) {
-      if (value < 1) this.productQuantity = 1;
-    },
-  },
-
   created() {
     // Get product detail
     this.$store.dispatch("products/getProductById", this.$route.params.id);
@@ -215,12 +206,11 @@ export default {
   },
 
   methods: {
-    decreaseQuantity() {
-      if (this.productQuantity > 1) this.productQuantity--;
+    addProductToCart() {
+      this.$store.dispatch("cart/addProductToCart", this.product);
     },
-    increaseQuantity() {
-      this.productQuantity++;
-    },
+
+    ...mapMutations("products", ["updateProductQuantity"]),
   },
 };
 </script>

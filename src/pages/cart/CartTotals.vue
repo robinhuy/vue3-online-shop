@@ -10,12 +10,6 @@
   >
     <h5 class="m-text20 p-b-24">Cart Totals</h5>
 
-    <div class="flex-w flex-sb-m p-b-12">
-      <span class="s-text18 w-size19 w-full-sm"> Subtotal: </span>
-
-      <span class="m-text21 w-size20 w-full-sm"> ${{ subTotal }} </span>
-    </div>
-
     <div class="flex-w flex-sb bo10 p-t-15 p-b-20">
       <span class="s-text18 w-size19 w-full-sm"> Shipping: </span>
 
@@ -87,9 +81,11 @@ import Select2 from "@/components/Select2.vue";
 
 export default {
   name: "CartTotals",
+
   props: {
     subTotal: Number,
   },
+
   components: {
     Select2,
   },

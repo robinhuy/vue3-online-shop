@@ -4,9 +4,9 @@
     <div class="container-menu-header">
       <div class="wrap_header">
         <!-- Logo -->
-        <router-link to="/" class="logo"
-          ><img src="@/assets/images/icons/logo.png" alt="IMG-LOGO"
-        /></router-link>
+        <router-link to="/" class="logo">
+          <img src="@/assets/images/icons/logo.png" alt="IMG-LOGO" />
+        </router-link>
 
         <!-- Menu -->
         <div class="wrap_menu">
@@ -35,88 +35,7 @@
 
           <span class="linedivide1"></span>
 
-          <div class="header-wrapicon2" @click="toggleCartDropdown">
-            <img
-              src="@/assets/images/icons/icon-header-02.png"
-              class="header-icon1 js-show-header-dropdown"
-              alt="ICON"
-            />
-            <span class="header-icons-noti">0</span>
-
-            <!-- Header cart noti -->
-            <div
-              class="header-cart header-dropdown"
-              :class="{ 'show-header-dropdown': isShowCartDropdown }"
-            >
-              <ul class="header-cart-wrapitem">
-                <li class="header-cart-item">
-                  <div class="header-cart-item-img">
-                    <img src="@/assets/images/item-cart-01.jpg" alt="IMG" />
-                  </div>
-
-                  <div class="header-cart-item-txt">
-                    <a href="#" class="header-cart-item-name">
-                      White Shirt With Pleat Detail Back
-                    </a>
-
-                    <span class="header-cart-item-info"> 1 x $19.00 </span>
-                  </div>
-                </li>
-
-                <li class="header-cart-item">
-                  <div class="header-cart-item-img">
-                    <img src="@/assets/images/item-cart-02.jpg" alt="IMG" />
-                  </div>
-
-                  <div class="header-cart-item-txt">
-                    <a href="#" class="header-cart-item-name">
-                      Converse All Star Hi Black Canvas
-                    </a>
-
-                    <span class="header-cart-item-info"> 1 x $39.00 </span>
-                  </div>
-                </li>
-
-                <li class="header-cart-item">
-                  <div class="header-cart-item-img">
-                    <img src="@/assets/images/item-cart-03.jpg" alt="IMG" />
-                  </div>
-
-                  <div class="header-cart-item-txt">
-                    <a href="#" class="header-cart-item-name">
-                      Nixon Porter Leather Watch In Tan
-                    </a>
-
-                    <span class="header-cart-item-info"> 1 x $17.00 </span>
-                  </div>
-                </li>
-              </ul>
-
-              <div class="header-cart-total">Total: $75.00</div>
-
-              <div class="header-cart-buttons">
-                <div class="header-cart-wrapbtn">
-                  <!-- Button -->
-                  <router-link
-                    to="/cart"
-                    class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4"
-                  >
-                    View Cart
-                  </router-link>
-                </div>
-
-                <div class="header-cart-wrapbtn">
-                  <!-- Button -->
-                  <a
-                    href="#"
-                    class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4"
-                  >
-                    Check Out
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <HeaderCartDropdown />
         </div>
       </div>
     </div>
@@ -142,87 +61,7 @@
 
           <span class="linedivide2"></span>
 
-          <div class="header-wrapicon2" @click="toggleCartDropdown">
-            <img
-              src="@/assets/images/icons/icon-header-02.png"
-              class="header-icon1 js-show-header-dropdown"
-              alt="ICON"
-            />
-            <span class="header-icons-noti">0</span>
-
-            <!-- Header cart noti -->
-            <div
-              class="header-cart header-dropdown"
-              :class="{ 'show-header-dropdown': isShowCartDropdown }"
-            >
-              <ul class="header-cart-wrapitem">
-                <li class="header-cart-item">
-                  <div class="header-cart-item-img">
-                    <img src="@/assets/images/item-cart-01.jpg" alt="IMG" />
-                  </div>
-
-                  <div class="header-cart-item-txt">
-                    <a href="#" class="header-cart-item-name">
-                      White Shirt With Pleat Detail Back
-                    </a>
-
-                    <span class="header-cart-item-info"> 1 x $19.00 </span>
-                  </div>
-                </li>
-
-                <li class="header-cart-item">
-                  <div class="header-cart-item-img">
-                    <img src="@/assets/images/item-cart-02.jpg" alt="IMG" />
-                  </div>
-
-                  <div class="header-cart-item-txt">
-                    <a href="#" class="header-cart-item-name">
-                      Converse All Star Hi Black Canvas
-                    </a>
-
-                    <span class="header-cart-item-info"> 1 x $39.00 </span>
-                  </div>
-                </li>
-
-                <li class="header-cart-item">
-                  <div class="header-cart-item-img">
-                    <img src="@/assets/images/item-cart-03.jpg" alt="IMG" />
-                  </div>
-
-                  <div class="header-cart-item-txt">
-                    <a href="#" class="header-cart-item-name">
-                      Nixon Porter Leather Watch In Tan
-                    </a>
-
-                    <span class="header-cart-item-info"> 1 x $17.00 </span>
-                  </div>
-                </li>
-              </ul>
-
-              <div class="header-cart-total">Total: $75.00</div>
-
-              <div class="header-cart-buttons">
-                <div class="header-cart-wrapbtn">
-                  <!-- Button -->
-                  <router-link
-                    to="/cart"
-                    class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4"
-                    >View Cart</router-link
-                  >
-                </div>
-
-                <div class="header-cart-wrapbtn">
-                  <!-- Button -->
-                  <a
-                    href="#"
-                    class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4"
-                  >
-                    Check Out
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <HeaderCartDropdown />
         </div>
 
         <div
@@ -302,32 +141,34 @@
 
 <script>
 import MenuItem from "./MenuItem.vue";
-import Select2 from "@/components/Select2.vue";
+import HeaderCartDropdown from "./HeaderCartDropdown.vue";
+import Select2 from "./Select2.vue";
 
 export default {
   name: "MainHeader",
+
   components: {
     MenuItem,
+    HeaderCartDropdown,
     Select2,
   },
+
   data() {
     return {
       language: {
         selected: {},
       },
       isShowMenuMobileDropdown: false,
-      isShowCartDropdown: false,
     };
   },
+
   methods: {
     toggleMenuMobileDropdown() {
       this.isShowMenuMobileDropdown = !this.isShowMenuMobileDropdown;
     },
+
     closeMenuMobileDropdown() {
       this.isShowMenuMobileDropdown = false;
-    },
-    toggleCartDropdown() {
-      this.isShowCartDropdown = !this.isShowCartDropdown;
     },
   },
 };
