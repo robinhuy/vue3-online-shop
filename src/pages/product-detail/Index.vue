@@ -17,7 +17,9 @@
 
     <!-- Product Detail -->
     <div class="container bgwhite p-t-35 p-b-80">
-      <div class="flex-w flex-sb">
+      <div v-if="isLoading" data-loader="ball-scale"></div>
+
+      <div v-else class="flex-w flex-sb">
         <div class="w-size13 p-t-30 respon5">
           <div class="wrap-slick3 flex-sb flex-w">
             <div class="wrap-slick3-dots">
@@ -133,11 +135,6 @@
             </div>
           </div>
 
-          <div class="p-b-45">
-            <span class="s-text8 m-r-35">SKU: {{ product.id }}</span>
-            <span class="s-text8">Categories: Mug, Design</span>
-          </div>
-
           <DropdownContent />
         </div>
       </div>
@@ -157,26 +154,22 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Select2 from "@/components/Select2.vue";
 import ProductsCarousel from "@/components/ProductsCarousel.vue";
 import DropdownContent from "./DropdownContent.vue";
 
 export default {
   name: "ProductDetail",
+
   components: {
     Select2,
     ProductsCarousel,
     DropdownContent,
   },
+
   data() {
     return {
-      product: {
-        id: "MUG-01",
-        name: "Boxy T-Shirt with Roll Sleeve Detail",
-        shortDescription:
-          "Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.",
-        price: 22,
-      },
       productImages: [],
       productQuantity: 1,
       sizes: [
@@ -193,7 +186,6 @@ export default {
         { value: "black", label: "Black" },
         { value: "blue", label: "Blue" },
       ],
-
       relatedProducts: [
         {
           id: 1,
@@ -248,11 +240,23 @@ export default {
       ],
     };
   },
+
+  computed: mapState("products", ["product", "isLoading"]),
+
   watch: {
     productQuantity(value) {
       if (value < 1) this.productQuantity = 1;
     },
   },
+
+  created() {
+    this.$store.dispatch("products/getProductById", this.$route.params.id);
+  },
+
+  async beforeRouteUpdate() {
+    this.$store.dispatch("products/getProductById", this.$route.params.id);
+  },
+
   methods: {
     decreaseQuantity() {
       if (this.productQuantity > 1) this.productQuantity--;

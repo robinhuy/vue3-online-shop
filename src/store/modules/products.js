@@ -2,6 +2,7 @@ import api from "@/services/products.service";
 
 const state = () => ({
   products: [],
+  product: {},
   isLoading: false,
   pageIndex: 1,
   limit: 4,
@@ -49,6 +50,15 @@ const actions = {
     commit("setProducts", response);
     commit("setLoading", false);
   },
+
+  async getProductById({ commit }, productId) {
+    commit("setLoading", true);
+
+    const product = await api.getProductById(productId);
+
+    commit("setProduct", product);
+    commit("setLoading", false);
+  },
 };
 
 const mutations = {
@@ -58,6 +68,9 @@ const mutations = {
   setProducts(state, response) {
     state.products = response.data;
     state.totalItems = +response.totalItems;
+  },
+  setProduct(state, product) {
+    state.product = product;
   },
   setPageIndex(state, pageIndex) {
     state.pageIndex = pageIndex;

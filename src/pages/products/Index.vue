@@ -73,10 +73,7 @@
                       'block2-labelsale': product.isSale,
                     }"
                   >
-                    <img
-                      :src="'http://localhost:3000' + product.image"
-                      alt="IMG-PRODUCT"
-                    />
+                    <img :src="product.image" alt="IMG-PRODUCT" />
 
                     <div class="block2-overlay trans-0-4">
                       <a
@@ -114,7 +111,7 @@
 
                   <div class="block2-txt p-t-20">
                     <router-link
-                      to="/products/1"
+                      :to="'/products/' + product.id"
                       class="block2-name dis-block s-text3 p-b-5"
                     >
                       {{ product.name }}

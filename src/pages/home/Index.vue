@@ -61,7 +61,7 @@
           <h3 class="m-text5 t-center">Featured Products</h3>
         </div>
 
-        <ProductsCarousel :products="featuredProducts" />
+        <ProductsCarousel :products="products" />
       </div>
     </section>
 
@@ -76,6 +76,7 @@
 <script>
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide } from "vue3-carousel";
+import { mapState } from "vuex";
 import ProductsCarousel from "@/components/ProductsCarousel.vue";
 import SectionBanner from "./SectionBanner.vue";
 import SectionInstagram from "./SectionInstagram.vue";
@@ -83,6 +84,7 @@ import SectionShipping from "./SectionShipping.vue";
 
 export default {
   name: "Home",
+
   components: {
     Carousel,
     Slide,
@@ -91,6 +93,7 @@ export default {
     SectionInstagram,
     SectionShipping,
   },
+
   data() {
     return {
       slides: [
@@ -98,59 +101,18 @@ export default {
         { id: 2, image: require("@/assets/images/master-slide-02.jpg") },
         { id: 3, image: require("@/assets/images/master-slide-03.jpg") },
       ],
-      featuredProducts: [
-        {
-          id: 1,
-          image: require("@/assets/images/item-02.jpg"),
-          name: "Herschel supply co 25l",
-          price: 75.0,
-          isNew: true,
-        },
-        {
-          id: 2,
-          image: require("@/assets/images/item-03.jpg"),
-          name: "Denim jacket blue",
-          price: 92.5,
-        },
-        {
-          id: 3,
-          image: require("@/assets/images/item-04.jpg"),
-          name: "Coach slim easton black",
-          price: 165.9,
-        },
-        {
-          id: 4,
-          image: require("@/assets/images/item-05.jpg"),
-          name: "Frayed denim shorts",
-          price: 15.9,
-          isSale: true,
-        },
-        {
-          id: 5,
-          image: require("@/assets/images/item-02.jpg"),
-          name: "Herschel supply co 25l",
-          price: 75.0,
-        },
-        {
-          id: 6,
-          image: require("@/assets/images/item-03.jpg"),
-          name: "Denim jacket blue",
-          price: 92.5,
-        },
-        {
-          id: 7,
-          image: require("@/assets/images/item-04.jpg"),
-          name: "Coach slim easton black",
-          price: 165.9,
-        },
-        {
-          id: 8,
-          image: require("@/assets/images/item-05.jpg"),
-          name: "Frayed denim shorts",
-          price: 15.9,
-        },
-      ],
     };
+  },
+
+  computed: mapState("products", ["products", "isLoading"]),
+
+  mounted() {
+    this.$store.dispatch("products/getProducts", {
+      page: 1,
+      limit: 8,
+      sort: "modifiedAt",
+      order: "desc",
+    });
   },
 };
 </script>

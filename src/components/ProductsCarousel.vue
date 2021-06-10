@@ -31,7 +31,10 @@
             <img :src="product.image" alt="IMG-PRODUCT" />
 
             <div class="block2-overlay trans-0-4">
-              <router-link to="/products/1" class="block2-btn-addwishlist hov-pointer trans-0-4">
+              <router-link
+                :to="'/products/' + product.id"
+                class="block2-btn-addwishlist hov-pointer trans-0-4"
+              >
                 <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
                 <i
                   class="icon-wishlist icon_heart dis-none"
@@ -52,7 +55,7 @@
 
           <div class="block2-txt p-t-20">
             <router-link
-              to="/products/1"
+              :to="'/products/' + product.id"
               class="block2-name dis-block s-text3 p-b-5"
             >
               {{ product.name }}
