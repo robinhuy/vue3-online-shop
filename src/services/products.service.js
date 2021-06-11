@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const API_DOMAIN = "http://localhost:3000";
+import { API_DOMAIN } from "@/config";
 
 export default {
   async getProducts({ page, limit, sort, order, search, categoryId }) {
