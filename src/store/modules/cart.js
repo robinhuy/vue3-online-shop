@@ -29,12 +29,12 @@ const actions = {
     const isExists = state.products.find((p) => p.id === product.id);
 
     if (isExists) {
-      commit("setAddToCartResult", "This item was already in your Cart.");
+      commit("setAddToCartResult", "This item was already in your cart.");
     } else {
       const newProduct = await api.addProductToCart(product);
 
       if (newProduct) {
-        commit("setAddToCartResult", "");
+        commit("setAddToCartResult", "Item successfully added to your cart.");
         commit("addProductToCart", newProduct);
       }
     }

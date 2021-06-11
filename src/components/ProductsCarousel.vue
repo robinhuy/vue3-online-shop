@@ -62,7 +62,7 @@
             </router-link>
 
             <span class="block2-price m-text6 p-r-5">
-              ${{ product.price }}
+              {{ currency(product.price) }}
             </span>
           </div>
         </div>
@@ -78,14 +78,21 @@
 <script>
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
+import { currency } from "@/utils/currency";
 
 export default {
   name: "ProductsCarousel",
+
   props: ["products"],
+
   components: {
     Carousel,
     Slide,
     Navigation,
+  },
+
+  methods: {
+    currency,
   },
 };
 </script>

@@ -64,7 +64,9 @@
     <div class="flex-w flex-sb-m p-t-26 p-b-30">
       <span class="m-text22 w-size19 w-full-sm"> Total: </span>
 
-      <span class="m-text21 w-size20 w-full-sm"> ${{ subTotal }} </span>
+      <span class="m-text21 w-size20 w-full-sm">
+        {{ currency(subTotal) }}
+      </span>
     </div>
 
     <div class="size15 trans-0-4">
@@ -78,6 +80,7 @@
 
 <script>
 import Select2 from "@/components/Select2.vue";
+import { currency } from "@/utils/currency";
 
 export default {
   name: "CartTotals",
@@ -88,6 +91,10 @@ export default {
 
   components: {
     Select2,
+  },
+
+  methods: {
+    currency,
   },
 };
 </script>

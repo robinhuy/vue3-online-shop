@@ -30,13 +30,13 @@
             </a>
 
             <span class="header-cart-item-info">
-              {{ product.quantity }} x ${{ product.price }}
+              {{ product.quantity }} x {{ currency(product.price) }}
             </span>
           </div>
         </li>
       </ul>
 
-      <div class="header-cart-total">Total: ${{ subTotal }}</div>
+      <div class="header-cart-total">Total: {{ currency(subTotal) }}</div>
 
       <div class="header-cart-buttons">
         <div class="header-cart-wrapbtn">
@@ -63,6 +63,7 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
+import { currency } from "@/utils/currency";
 
 export default {
   name: "HeaderCartDropdown",
@@ -80,6 +81,8 @@ export default {
     toggleCartDropdown() {
       this.$store.commit("cart/setShowCartDropdown", !this.isShowCartDropdown);
     },
+
+    currency,
   },
 };
 </script>

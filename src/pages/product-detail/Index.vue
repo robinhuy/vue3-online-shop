@@ -60,7 +60,7 @@
             {{ product.name }}
           </h4>
 
-          <span class="m-text17"> ${{ product.price }} </span>
+          <span class="m-text17"> {{ currency(product.price) }} </span>
 
           <div class="p-t-33 p-b-60">
             <div class="flex-m flex-w p-b-10">
@@ -152,6 +152,7 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import { currency } from "@/utils/currency";
 import Select2 from "@/components/Select2.vue";
 import ProductsCarousel from "@/components/ProductsCarousel.vue";
 import DropdownContent from "./DropdownContent.vue";
@@ -206,6 +207,8 @@ export default {
   },
 
   methods: {
+    currency,
+
     addProductToCart() {
       this.$store.dispatch("cart/addProductToCart", this.product);
     },

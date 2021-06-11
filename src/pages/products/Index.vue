@@ -118,7 +118,7 @@
                     </router-link>
 
                     <span class="block2-price m-text6 p-r-5">
-                      ${{ product.price }}
+                      {{ currency(product.price) }}
                     </span>
                   </div>
                 </div>
@@ -140,17 +140,20 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
+import { currency } from "@/utils/currency";
 import Select2 from "@/components/Select2.vue";
 import Pagination from "@/components/Pagination.vue";
 import LeftBar from "./LeftBar.vue";
 
 export default {
   name: "Products",
+
   components: {
     Select2,
     Pagination,
     LeftBar,
   },
+
   computed: {
     ...mapState("products", [
       "isLoading",
@@ -165,11 +168,13 @@ export default {
       "itemEndIndex",
     ]),
   },
+
   created() {
     this.$store.dispatch("products/getProducts", {});
   },
+
   methods: {
-    ...mapActions("products", ["getProducts"]),
+    currency,
 
     sortProducts(option) {
       const options = option.value.split("-");
@@ -178,9 +183,12 @@ export default {
 
       this.$store.dispatch("products/getProducts", { sort, order });
     },
+
     changePage(pageIndex) {
       this.$store.dispatch("products/getProducts", { pageIndex });
     },
+
+    ...mapActions("products", ["getProducts"]),
   },
 };
 </script>
