@@ -1,41 +1,41 @@
 @font-face {
   font-family: Montserrat-Regular;
-  src: url("/fonts/montserrat/Montserrat-Regular.ttf");
+  src: url("../fonts/montserrat/Montserrat-Regular.ttf");
 }
 
 @font-face {
   font-family: Montserrat-Medium;
-  src: url("/fonts/montserrat/Montserrat-Medium.ttf");
+  src: url("../fonts/montserrat/Montserrat-Medium.ttf");
 }
 
 @font-face {
   font-family: Montserrat-Bold;
-  src: url("/fonts/montserrat/Montserrat-Bold.ttf");
+  src: url("../fonts/montserrat/Montserrat-Bold.ttf");
 }
 
 @font-face {
   font-family: Montserrat-Italic;
-  src: url("/fonts/montserrat/Montserrat-Italic.ttf");
+  src: url("../fonts/montserrat/Montserrat-Italic.ttf");
 }
 
 @font-face {
   font-family: Montserrat-Black;
-  src: url("/fonts/montserrat/Montserrat-Black.ttf");
+  src: url("../fonts/montserrat/Montserrat-Black.ttf");
 }
 
 @font-face {
   font-family: Linearicons;
-  src: url("/fonts/Linearicons-Free-v1.0.0/WebFont/Linearicons-Free.ttf");
+  src: url("../fonts/Linearicons-Free-v1.0.0/WebFont/Linearicons-Free.ttf");
 }
 
 @font-face {
   font-family: Poppins-Bold;
-  src: url("/fonts/poppins/Poppins-Bold.ttf");
+  src: url("../fonts/poppins/Poppins-Bold.ttf");
 }
 
 @font-face {
   font-family: Poppins-Black;
-  src: url("/fonts/poppins/Poppins-Black.ttf");
+  src: url("../fonts/poppins/Poppins-Black.ttf");
 }
 
 /*[ RESTYLE TAG ]
