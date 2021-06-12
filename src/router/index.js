@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { BASE_URL } from "@/config";
 import Home from "@/pages/home/Index.vue";
 
 const routes = [
@@ -14,9 +15,9 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(BASE_URL),
   scrollBehavior() {
-    return { top: 0 }
+    return { top: 0 };
   },
   routes,
 });

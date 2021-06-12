@@ -1,3 +1,7 @@
-// export const API_DOMAIN = "http://localhost:3000";
+const isProductionEnv = process.env.NODE_ENV === "production";
 
-export const API_DOMAIN = "https://online-shop-apis.herokuapp.com";
+export const API_DOMAIN = isProductionEnv
+  ? "https://online-shop-apis.herokuapp.com"
+  : "http://localhost:3000";
+
+export const BASE_URL = isProductionEnv ? "/vue3-online-shop/" : "/";
