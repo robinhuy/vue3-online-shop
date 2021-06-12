@@ -55,82 +55,85 @@
               </span>
             </div>
 
-            <!-- Product -->
-            <div v-if="isLoading" data-loader="ball-scale"></div>
+            <transition name="fade">
+              <!-- <div v-if="isLoading" data-loader="ball-scale"></div> -->
 
-            <div v-else class="row">
-              <div
-                class="col-sm-12 col-md-6 col-lg-4 p-b-50"
-                v-for="product in products"
-                :key="product.id"
-              >
-                <!-- Block2 -->
-                <div class="block2">
+              <div v-if="!isLoading">
+                <div class="row">
                   <div
-                    class="block2-img wrap-pic-w of-hidden pos-relative"
-                    :class="{
-                      'block2-labelnew': product.isNew,
-                      'block2-labelsale': product.isSale,
-                    }"
+                    class="col-sm-12 col-md-6 col-lg-4 p-b-50"
+                    v-for="product in products"
+                    :key="product.id"
                   >
-                    <img :src="product.image" alt="IMG-PRODUCT" />
-
-                    <div class="block2-overlay trans-0-4">
-                      <a
-                        href="#"
-                        class="block2-btn-addwishlist hov-pointer trans-0-4"
+                    <!-- Block2 -->
+                    <div class="block2">
+                      <div
+                        class="block2-img wrap-pic-w of-hidden pos-relative"
+                        :class="{
+                          'block2-labelnew': product.isNew,
+                          'block2-labelsale': product.isSale,
+                        }"
                       >
-                        <i
-                          class="icon-wishlist icon_heart_alt"
-                          aria-hidden="true"
-                        ></i>
-                        <i
-                          class="icon-wishlist icon_heart dis-none"
-                          aria-hidden="true"
-                        ></i>
-                      </a>
+                        <img :src="product.image" alt="IMG-PRODUCT" />
 
-                      <div class="block2-btn-addcart w-size1 trans-0-4">
-                        <!-- Button -->
-                        <button
-                          class="
-                            flex-c-m
-                            size1
-                            bg4
-                            bo-rad-23
-                            hov1
-                            s-text1
-                            trans-0-4
-                          "
+                        <div class="block2-overlay trans-0-4">
+                          <a
+                            href="#"
+                            class="block2-btn-addwishlist hov-pointer trans-0-4"
+                          >
+                            <i
+                              class="icon-wishlist icon_heart_alt"
+                              aria-hidden="true"
+                            ></i>
+                            <i
+                              class="icon-wishlist icon_heart dis-none"
+                              aria-hidden="true"
+                            ></i>
+                          </a>
+
+                          <div class="block2-btn-addcart w-size1 trans-0-4">
+                            <!-- Button -->
+                            <button
+                              class="
+                                flex-c-m
+                                size1
+                                bg4
+                                bo-rad-23
+                                hov1
+                                s-text1
+                                trans-0-4
+                              "
+                            >
+                              Add to Cart
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="block2-txt p-t-20">
+                        <router-link
+                          :to="'/products/' + product.id"
+                          class="block2-name dis-block s-text3 p-b-5"
                         >
-                          Add to Cart
-                        </button>
+                          {{ product.name }}
+                        </router-link>
+
+                        <span class="block2-price m-text6 p-r-5">
+                          {{ currency(product.price) }}
+                        </span>
                       </div>
                     </div>
                   </div>
-
-                  <div class="block2-txt p-t-20">
-                    <router-link
-                      :to="'/products/' + product.id"
-                      class="block2-name dis-block s-text3 p-b-5"
-                    >
-                      {{ product.name }}
-                    </router-link>
-
-                    <span class="block2-price m-text6 p-r-5">
-                      {{ currency(product.price) }}
-                    </span>
-                  </div>
                 </div>
-              </div>
-            </div>
 
-            <Pagination
-              :length="totalItems"
-              :pageSize="limit"
-              :pageIndex="pageIndex"
-              @change="changePage"
-            />
+                <Pagination
+                  :length="totalItems"
+                  :pageSize="limit"
+                  :pageIndex="pageIndex"
+                  @change="changePage"
+                />
+              </div>
+            </transition>
           </div>
         </div>
       </div>

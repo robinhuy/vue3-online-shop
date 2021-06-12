@@ -33,13 +33,17 @@
 <script>
 export default {
   name: "Select2",
+  
   props: ["value", "options", "style"],
+
   emits: ["change"],
+
   data() {
     return {
       isShowDropdown: false,
     };
   },
+
   computed: {
     label() {
       return (
@@ -48,6 +52,7 @@ export default {
       );
     },
   },
+
   methods: {
     toggleDropdown() {
       this.isShowDropdown = !this.isShowDropdown;

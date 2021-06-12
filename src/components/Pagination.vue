@@ -31,8 +31,11 @@
 <script>
 export default {
   name: "Pagination",
+  
   props: ["length", "pageSize", "pageIndex", "numberOfDisplayPages"],
+
   emits: ["change"],
+
   computed: {
     numberOfPages() {
       return Math.ceil(this.length / this.pageSize);
@@ -62,6 +65,7 @@ export default {
       return display;
     },
   },
+
   methods: {
     changePage(page, event) {
       event.preventDefault();

@@ -67,7 +67,11 @@
               <div class="s-text15 w-size15 t-center">Size</div>
 
               <div class="w-size16">
-                <Select2 :options="sizes" />
+                <Select2
+                  :options="sizes"
+                  :value="productSize"
+                  @change="chooseSize"
+                />
               </div>
             </div>
 
@@ -75,7 +79,11 @@
               <div class="s-text15 w-size15 t-center">Color</div>
 
               <div class="w-size16">
-                <Select2 :options="colors" />
+                <Select2
+                  :options="colors"
+                  :value="productColor"
+                  @change="chooseColor"
+                />
               </div>
             </div>
 
@@ -169,7 +177,8 @@ export default {
   data() {
     return {
       productImages: [],
-      productQuantity: 1,
+      productSize: "",
+      productColor: "",
       sizes: [
         { value: "", label: "Choose an option" },
         { value: "s", label: "Size S" },
@@ -208,6 +217,14 @@ export default {
 
   methods: {
     currency,
+
+    chooseSize(option) {
+      this.productSize = option.value;
+    },
+
+    chooseColor(option) {
+      this.productColor = option.value;
+    },
 
     addProductToCart() {
       this.$store.dispatch("cart/addProductToCart", this.product);
