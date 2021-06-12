@@ -106,13 +106,8 @@ export default {
 
   computed: mapState("products", ["products", "isLoading"]),
 
-  mounted() {
-    this.$store.dispatch("products/getProducts", {
-      page: 1,
-      limit: 8,
-      sort: "modifiedAt",
-      order: "desc",
-    });
+  created() {
+    this.$store.dispatch("products/getFeaturedProducts");
   },
 };
 </script>

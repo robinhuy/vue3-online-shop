@@ -77,12 +77,24 @@
 <script>
 export default {
   name: "Contact",
+
+  data() {
+    return {
+      googleMapScript: null,
+    };
+  },
+
   mounted() {
+    if (document.getElementById("google-map")) {
+      return;
+    }
+
     let googleMapScript = document.createElement("script");
     googleMapScript.setAttribute(
       "src",
       "https://maps.googleapis.com/maps/api/js?key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes"
     );
+    googleMapScript.setAttribute("id", "google-map");
 
     googleMapScript.onload = function () {
       const googleMap = window.google.maps;
@@ -141,6 +153,8 @@ export default {
     };
 
     document.head.appendChild(googleMapScript);
+
+    this.googleMapScript = googleMapScript;
   },
 };
 </script>

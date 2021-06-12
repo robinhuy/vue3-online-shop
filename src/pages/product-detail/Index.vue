@@ -203,12 +203,7 @@ export default {
     this.$store.dispatch("products/getProductById", this.$route.params.id);
 
     // Get related products
-    this.$store.dispatch("products/getProducts", {
-      page: 1,
-      limit: 8,
-      sort: "modifiedAt",
-      order: "desc",
-    });
+    this.$store.dispatch("products/getFeaturedProducts");
   },
 
   async beforeRouteUpdate(to) {

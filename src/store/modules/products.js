@@ -57,6 +57,18 @@ const actions = {
     commit("setLoading", false);
   },
 
+  async getFeaturedProducts({ commit }) {
+    const response = await api.getProducts({
+      page: 1,
+      limit: 8,
+      sort: "id",
+      order: "desc",
+      search: "",
+    });
+
+    commit("setProducts", response);
+  },
+
   async getCategories({ commit }) {
     const categories = await api.getCategories();
     commit("setCategories", categories);
