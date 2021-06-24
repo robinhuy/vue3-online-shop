@@ -3,6 +3,8 @@ import api from "@/services/users.service";
 const state = () => ({
   user: {},
   loginMessage: "",
+  isRegisterSuccess: false,
+  registerMessage: "",
 });
 
 const getters = {};
@@ -22,6 +24,18 @@ const actions = {
       }
     }
   },
+
+  async register({ commit }, user) {
+    try {
+      await api.register(user);
+
+      commit("setRegisterSuccess", true);
+      commit("setRegisterMessage", "");
+    } catch (error) {
+      commit("setRegisterSuccess", false);
+      commit("setRegisterMessage", "Register failed!");
+    }
+  },
 };
 
 const mutations = {
@@ -31,6 +45,18 @@ const mutations = {
 
   setLoginMessage(state, message) {
     state.loginMessage = message;
+  },
+
+  setRegisterSuccess(state, status) {
+    state.isRegisterSuccess = status;
+  },
+
+  setRegisterMessage(state, message) {
+    state.registerMessage = message;
+  },
+
+  logout(state) {
+    state.user = {};
   },
 };
 

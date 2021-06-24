@@ -9,4 +9,10 @@ export default {
         return response.data;
       });
   },
+
+  async register(user) {
+    return axios.post(`${API_DOMAIN}/register`, user).then((response) => {
+      return response.data;
+    });
+  },
 };

@@ -25,13 +25,13 @@
 
         <!-- Header Icon -->
         <div class="header-icons">
-          <a href="#" class="header-wrapicon1 dis-block">
+          <router-link :to="user?.avatar ? '/profile' : '/login'">
             <img
-              src="@/assets/images/icons/icon-header-01.png"
+              :src="user?.avatar ? user.avatar : defaultAvatar"
               class="header-icon1"
-              alt="ICON"
+              alt="Avatar"
             />
-          </a>
+          </router-link>
 
           <span class="linedivide1"></span>
 
@@ -53,9 +53,9 @@
         <div class="header-icons-mobile">
           <a href="#" class="header-wrapicon1 dis-block">
             <img
-              src="@/assets/images/icons/icon-header-01.png"
+              :src="user?.avatar ? user.avatar : defaultAvatar"
               class="header-icon1"
-              alt="ICON"
+              alt="Avatar"
             />
           </a>
 
@@ -140,6 +140,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import defaultAvatar from "@/assets/images/icons/icon-header-01.png";
 import MenuItem from "./MenuItem.vue";
 import HeaderCartDropdown from "./HeaderCartDropdown.vue";
 import Select2 from "./Select2.vue";
@@ -155,12 +157,15 @@ export default {
 
   data() {
     return {
+      defaultAvatar,
       language: {
         selected: {},
       },
       isShowMenuMobileDropdown: false,
     };
   },
+
+  computed: mapState("users", ["user"]),
 
   methods: {
     toggleMenuMobileDropdown() {
