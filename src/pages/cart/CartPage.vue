@@ -132,7 +132,7 @@ import { currency } from "@/utils/currency";
 import CartTotals from "./CartTotals.vue";
 
 export default {
-  name: "Cart",
+  name: "CartPage",
 
   components: {
     CartTotals,

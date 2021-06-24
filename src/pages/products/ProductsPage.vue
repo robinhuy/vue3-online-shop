@@ -149,7 +149,7 @@ import Pagination from "@/components/Pagination.vue";
 import LeftBar from "./LeftBar.vue";
 
 export default {
-  name: "Products",
+  name: "ProductsPage",
 
   components: {
     Select2,

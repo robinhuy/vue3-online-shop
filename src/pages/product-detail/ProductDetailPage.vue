@@ -166,7 +166,7 @@ import ProductsCarousel from "@/components/ProductsCarousel.vue";
 import DropdownContent from "./DropdownContent.vue";
 
 export default {
-  name: "ProductDetail",
+  name: "ProductDetailPage",
 
   components: {
     Select2,

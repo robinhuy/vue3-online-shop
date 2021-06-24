@@ -83,7 +83,7 @@ import SectionInstagram from "./SectionInstagram.vue";
 import SectionShipping from "./SectionShipping.vue";
 
 export default {
-  name: "Home",
+  name: "HomePage",
 
   components: {
     Carousel,
