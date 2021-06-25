@@ -15,43 +15,48 @@
     <section class="bgwhite p-t-66 p-b-60">
       <div class="container">
         <div class="login-form m-auto">
-          <p
-            class="m-b-20 text-center"
-            :class="isRegisterSuccess ? 'text-success' : 'text-danger'"
-          >
-            {{ loginMessage }}
-          </p>
+          <Form @submit="login" :validation-schema="schema">
+            <p class="m-b-20 text-center text-danger">
+              {{ loginMessage }}
+            </p>
 
-          <div class="bo4 of-hidden size15 m-b-20">
-            <input
-              class="sizefull s-text7 p-l-22 p-r-22"
-              type="text"
-              placeholder="Username"
-              v-model="username"
-            />
-          </div>
+            <div class="bo4 of-hidden size15 m-b-10">
+              <Field
+                name="email"
+                type="text"
+                placeholder="Email"
+                class="sizefull s-text7 p-l-22 p-r-22"
+                :disabled="isLoading"
+              />
+            </div>
 
-          <div class="bo4 of-hidden size15 m-b-20">
-            <input
-              class="sizefull s-text7 p-l-22 p-r-22"
-              type="password"
-              placeholder="Password"
-              v-model="password"
-              @keyup.enter="login"
-            />
-          </div>
+            <ErrorMessage name="email" class="text-danger m-b-20 d-block" />
 
-          <div class="w-size25 m-auto">
-            <button
-              @click="login"
-              class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4"
-              :class="{ disabled: !isFormValid }"
-              :disabled="!isFormValid"
-            >
-              Login
-            </button>
-          </div>
+            <div class="bo4 of-hidden size15 m-b-10">
+              <Field
+                name="password"
+                type="password"
+                placeholder="Password"
+                class="sizefull s-text7 p-l-22 p-r-22"
+                :disabled="isLoading"
+              />
+            </div>
 
+            <ErrorMessage name="password" class="text-danger m-b-20 d-block" />
+
+            <div class="w-size25 m-auto">
+              <button
+                class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4  m-t-20"
+                :class="{ disabled: isLoading }"
+                :disabled="isLoading"
+              >
+                <span v-show="isLoading" data-loader="ball-scale"></span>
+                Login
+              </button>
+            </div>
+          </Form>
+
+          <br />
           <hr />
 
           <p class="text-center">
@@ -67,34 +72,51 @@
 
 <script>
 import { mapState } from "vuex";
+import { Form, Field, ErrorMessage } from "vee-validate";
+import * as yup from "yup";
 
 export default {
   name: "LoginPage",
 
+  components: {
+    Form,
+    Field,
+    ErrorMessage,
+  },
+
   data() {
+    const schema = yup.object().shape({
+      email: yup
+        .string()
+        .required("Email is required!")
+        .email("Email is invalid!"),
+      password: yup.string().required("Password is required!"),
+    });
+
     return {
-      username: "",
-      password: "",
+      isLoading: false,
+      schema,
     };
   },
 
-  computed: {
-    isFormValid() {
-      return this.username !== "" && this.password !== "";
-    },
-    ...mapState("users", [
-      "isLoginSuccess",
-      "isRegisterSuccess",
-      "loginMessage",
-    ]),
+  computed: mapState("users", ["isLoginSuccess", "loginMessage"]),
+
+  created() {
+    if (this.isLoginSuccess) {
+      this.$router.replace("/profile");
+    }
   },
 
   methods: {
-    async login() {
+    async login(user) {
+      this.isLoading = true;
+
       await this.$store.dispatch("users/login", {
-        username: this.username,
-        password: this.password,
+        username: user.email,
+        password: user.password,
       });
+
+      this.isLoading = false;
 
       if (this.isLoginSuccess) {
         this.$router.push("/");

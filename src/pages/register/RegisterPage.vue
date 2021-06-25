@@ -15,52 +15,93 @@
     <section class="bgwhite p-t-66 p-b-60">
       <div class="container">
         <div class="register-form m-auto">
-          <p class="m-b-20 text-center text-danger">{{ registerMessage }}</p>
+          <template v-if="!isRegisterSuccess">
+            <Form @submit="register" :validation-schema="schema">
+              <p class="m-b-10 text-center text-danger">
+                {{ registerMessage }}
+              </p>
 
-          <div class="bo4 of-hidden size15 m-b-20">
-            <input
-              class="sizefull s-text7 p-l-22 p-r-22"
-              type="text"
-              placeholder="Username"
-              v-model="username"
-            />
-          </div>
+              <div class="bo4 of-hidden size15 m-b-10">
+                <Field
+                  name="firstName"
+                  type="text"
+                  placeholder="First Name"
+                  class="sizefull s-text7 p-l-22 p-r-22"
+                  :disabled="isLoading"
+                />
+              </div>
 
-          <div class="bo4 of-hidden size15 m-b-20">
-            <input
-              class="sizefull s-text7 p-l-22 p-r-22"
-              type="text"
-              placeholder="Email"
-              v-model="email"
-            />
-          </div>
+              <ErrorMessage
+                name="firstName"
+                class="text-danger m-b-20 d-block"
+              />
 
-          <div class="bo4 of-hidden size15 m-b-20">
-            <input
-              class="sizefull s-text7 p-l-22 p-r-22"
-              type="password"
-              placeholder="Password"
-              v-model="password"
-              @keyup.enter="register"
-            />
-          </div>
+              <div class="bo4 of-hidden size15 m-b-10">
+                <Field
+                  name="lastName"
+                  type="text"
+                  placeholder="Last Name"
+                  class="sizefull s-text7 p-l-22 p-r-22"
+                  :disabled="isLoading"
+                />
+              </div>
 
-          <div class="w-size25 m-auto">
-            <button
-              @click="register"
-              class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4"
-              :class="{ disabled: !isFormValid }"
-              :disabled="!isFormValid"
+              <div class="bo4 of-hidden size15 m-b-10">
+                <Field
+                  name="email"
+                  type="text"
+                  placeholder="Email"
+                  class="sizefull s-text7 p-l-22 p-r-22"
+                  :disabled="isLoading"
+                />
+              </div>
+
+              <ErrorMessage name="email" class="text-danger m-b-20 d-block" />
+
+              <div class="bo4 of-hidden size15 m-b-10">
+                <Field
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  class="sizefull s-text7 p-l-22 p-r-22"
+                  :disabled="isLoading"
+                />
+              </div>
+
+              <ErrorMessage
+                name="password"
+                class="text-danger m-b-20 d-block"
+              />
+
+              <div class="w-size25 m-auto">
+                <button
+                  class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4 m-t-20"
+                  :class="{ disabled: isLoading }"
+                  :disabled="isLoading"
+                >
+                  <span v-show="isLoading" data-loader="ball-scale"></span>
+                  Register
+                </button>
+              </div>
+            </Form>
+
+            <br />
+            <hr />
+
+            <p class="text-center">
+              <router-link to="/login"
+                >Have an account? Login now!
+              </router-link>
+            </p>
+          </template>
+
+          <template v-else>
+            <p class="text-center">{{ message }}</p>
+
+            <router-link to="/login"
+              ><h4 class="text-center">Go to Login Page »</h4></router-link
             >
-              Register
-            </button>
-          </div>
-
-          <hr />
-
-          <p class="text-center">
-            <router-link to="/login">Have an account? Login now! </router-link>
-          </p>
+          </template>
         </div>
       </div>
     </section>
@@ -69,39 +110,71 @@
 
 <script>
 import { mapState } from "vuex";
+import { Form, Field, ErrorMessage } from "vee-validate";
+import * as yup from "yup";
 
 export default {
   name: "RegisterPage",
 
+  components: {
+    Form,
+    Field,
+    ErrorMessage,
+  },
+
   data() {
+    const schema = yup.object().shape({
+      firstName: yup
+        .string()
+        .required("First Name is required!")
+        .min(3, "First Name must be at least 3 characters!")
+        .max(20, "First Name must be maximum 20 characters!"),
+      email: yup
+        .string()
+        .required("Email is required!")
+        .email("Email is invalid!")
+        .max(50, "Email must be maximum 50 characters!"),
+      password: yup
+        .string()
+        .required("Password is required!")
+        .min(6, "Password must be at least 6 characters!")
+        .max(40, "Password must be maximum 40 characters!"),
+    });
+
     return {
-      username: "",
-      email: "",
-      password: "",
+      isLoading: false,
+      message: "",
+      schema,
     };
   },
 
-  computed: {
-    isFormValid() {
-      return this.username !== "" && this.password !== "";
-    },
-    ...mapState("users", ["isRegisterSuccess", "registerMessage"]),
+  computed: mapState("users", [
+    "isLoginSuccess",
+    "isRegisterSuccess",
+    "registerMessage",
+  ]),
+
+  created() {
+    if (this.isLoginSuccess) {
+      this.$router.replace("/profile");
+    }
   },
 
   methods: {
-    async register() {
+    async register(user) {
+      this.isLoading = true;
+
       await this.$store.dispatch("users/register", {
-        username: this.username,
-        email: this.email,
-        password: this.password,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
       });
 
+      this.isLoading = false;
+
       if (this.isRegisterSuccess) {
-        this.$store.commit(
-          "users/setLoginMessage",
-          "Register successfully, please login!"
-        );
-        this.$router.push("/login");
+        this.message = "Register successfully.";
       }
     },
   },

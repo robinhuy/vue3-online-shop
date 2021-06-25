@@ -14,6 +14,12 @@
     <!-- content page -->
     <section class="bgwhite p-t-66 p-b-60">
       <div class="container">
+        <h1 class="text-center">
+          Hello {{ user.firstName }} {{ user.lastName }}
+        </h1>
+
+        <br />
+
         <div class="w-size25 m-auto">
           <button
             @click="logout"
@@ -33,10 +39,10 @@ import { mapState } from "vuex";
 export default {
   name: "ProfilePage",
 
-  computed: mapState("users", ["user"]),
+  computed: mapState("users", ["isLoginSuccess", "user"]),
 
   created() {
-    if (!this.user.name) {
+    if (!this.isLoginSuccess) {
       this.$router.replace("/");
     }
   },

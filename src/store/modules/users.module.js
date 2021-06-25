@@ -11,9 +11,9 @@ const state = () => ({
 const getters = {};
 
 const actions = {
-  async login({ commit }, { username, password }) {
+  async login({ commit }, { email, password }) {
     try {
-      const user = await api.login({ username, password });
+      const user = await api.login({ email, password });
 
       commit("setUser", user);
       commit("setLoginSuccess", true);
