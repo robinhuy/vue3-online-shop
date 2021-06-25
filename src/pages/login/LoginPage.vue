@@ -15,7 +15,12 @@
     <section class="bgwhite p-t-66 p-b-60">
       <div class="container">
         <div class="login-form m-auto">
-          <p class="m-b-20 text-center text-danger">{{ loginMessage }}</p>
+          <p
+            class="m-b-20 text-center"
+            :class="isRegisterSuccess ? 'text-success' : 'text-danger'"
+          >
+            {{ loginMessage }}
+          </p>
 
           <div class="bo4 of-hidden size15 m-b-20">
             <input
@@ -77,15 +82,23 @@ export default {
     isFormValid() {
       return this.username !== "" && this.password !== "";
     },
-    ...mapState("users", ["loginMessage"]),
+    ...mapState("users", [
+      "isLoginSuccess",
+      "isRegisterSuccess",
+      "loginMessage",
+    ]),
   },
 
   methods: {
-    login() {
-      this.$store.dispatch("users/login", {
+    async login() {
+      await this.$store.dispatch("users/login", {
         username: this.username,
         password: this.password,
       });
+
+      if (this.isLoginSuccess) {
+        this.$router.push("/");
+      }
     },
   },
 };

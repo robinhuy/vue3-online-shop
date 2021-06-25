@@ -25,7 +25,7 @@
 
         <!-- Header Icon -->
         <div class="header-icons">
-          <router-link :to="user?.avatar ? '/profile' : '/login'">
+          <router-link :to="isLoginSuccess ? '/profile' : '/login'">
             <img
               :src="user?.avatar ? user.avatar : defaultAvatar"
               class="header-icon1"
@@ -165,7 +165,7 @@ export default {
     };
   },
 
-  computed: mapState("users", ["user"]),
+  computed: mapState("users", ["isLoginSuccess", "user"]),
 
   methods: {
     toggleMenuMobileDropdown() {

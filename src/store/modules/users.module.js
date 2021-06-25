@@ -2,6 +2,7 @@ import api from "@/services/users.service";
 
 const state = () => ({
   user: {},
+  isLoginSuccess: false,
   loginMessage: "",
   isRegisterSuccess: false,
   registerMessage: "",
@@ -15,10 +16,17 @@ const actions = {
       const user = await api.login({ username, password });
 
       commit("setUser", user);
+      commit("setLoginSuccess", true);
       commit("setLoginMessage", "");
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        commit("setLoginMessage", "Username or password is incorrect!");
+      commit("setLoginSuccess", false);
+
+      const errorResponse = error.response;
+      if (errorResponse && errorResponse.status === 400) {
+        commit(
+          "setLoginMessage",
+          errorResponse.data?.message || "Login failed!"
+        );
       } else {
         commit("setLoginMessage", "Login failed!");
       }
@@ -33,7 +41,16 @@ const actions = {
       commit("setRegisterMessage", "");
     } catch (error) {
       commit("setRegisterSuccess", false);
-      commit("setRegisterMessage", "Register failed!");
+
+      const errorResponse = error.response;
+      if (errorResponse && errorResponse.status === 400) {
+        commit(
+          "setRegisterMessage",
+          errorResponse.data?.message || "Register failed!"
+        );
+      } else {
+        commit("setRegisterMessage", "Register failed!");
+      }
     }
   },
 };
@@ -41,6 +58,10 @@ const actions = {
 const mutations = {
   setUser(state, user) {
     state.user = user;
+  },
+
+  setLoginSuccess(state, status) {
+    state.isLoginSuccess = status;
   },
 
   setLoginMessage(state, message) {
@@ -57,6 +78,8 @@ const mutations = {
 
   logout(state) {
     state.user = {};
+    state.isLoginSuccess = false;
+    state.isRegisterSuccess = false;
   },
 };
 
