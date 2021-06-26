@@ -156,7 +156,7 @@ export default {
 
   created() {
     if (this.isLoginSuccess) {
-      this.$router.replace("/profile");
+      this.$router.replace("/user");
     }
   },
 

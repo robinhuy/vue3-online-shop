@@ -46,7 +46,16 @@
 
             <div class="w-size25 m-auto">
               <button
-                class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4  m-t-20"
+                class="
+                  flex-c-m
+                  size2
+                  bg1
+                  bo-rad-23
+                  hov1
+                  m-text3
+                  trans-0-4
+                  m-t-20
+                "
                 :class="{ disabled: isLoading }"
                 :disabled="isLoading"
               >
@@ -103,7 +112,7 @@ export default {
 
   created() {
     if (this.isLoginSuccess) {
-      this.$router.replace("/profile");
+      this.$router.replace("/user");
     }
   },
 
@@ -112,14 +121,14 @@ export default {
       this.isLoading = true;
 
       await this.$store.dispatch("users/login", {
-        username: user.email,
+        email: user.email,
         password: user.password,
       });
 
       this.isLoading = false;
 
       if (this.isLoginSuccess) {
-        this.$router.push("/");
+        this.$router.push("/user");
       }
     },
   },

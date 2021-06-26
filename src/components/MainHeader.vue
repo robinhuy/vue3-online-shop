@@ -25,7 +25,7 @@
 
         <!-- Header Icon -->
         <div class="header-icons">
-          <router-link :to="isLoginSuccess ? '/profile' : '/login'">
+          <router-link :to="isLoginSuccess ? '/user' : '/login'">
             <img
               :src="user?.avatar ? user.avatar : defaultAvatar"
               class="header-icon1"
