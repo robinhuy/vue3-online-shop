@@ -1,8 +1,10 @@
 import api from "@/services/users.service";
 
+const user = api.getLoggedInUser();
+
 const state = () => ({
-  user: {},
-  isLoginSuccess: false,
+  user,
+  isLoginSuccess: !!user?.token,
   loginMessage: "",
   isRegisterSuccess: false,
   registerMessage: "",
@@ -80,6 +82,7 @@ const mutations = {
     state.user = {};
     state.isLoginSuccess = false;
     state.isRegisterSuccess = false;
+    localStorage.setItem("user", null);
   },
 };
 

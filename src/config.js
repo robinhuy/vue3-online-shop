@@ -5,3 +5,5 @@ export const API_DOMAIN = isProductionEnv
   : "http://localhost:3000";
 
 export const BASE_URL = isProductionEnv ? "/vue3-online-shop/" : "/";
+
+export const DOMAIN_TITLE = "Vue 3 Online Shop";

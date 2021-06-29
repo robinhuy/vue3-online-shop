@@ -167,6 +167,10 @@ export default {
 
   computed: mapState("users", ["isLoginSuccess", "user"]),
 
+  created() {
+    this.$store.dispatch("cart/getProductsInCart");
+  },
+
   methods: {
     toggleMenuMobileDropdown() {
       this.isShowMenuMobileDropdown = !this.isShowMenuMobileDropdown;

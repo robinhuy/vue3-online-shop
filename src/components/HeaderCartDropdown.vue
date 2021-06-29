@@ -73,10 +73,6 @@ export default {
     ...mapGetters("cart", ["totalItems", "subTotal"]),
   },
 
-  created() {
-    this.$store.dispatch("cart/getProductsInCart");
-  },
-
   methods: {
     toggleCartDropdown() {
       this.$store.commit("cart/setShowCartDropdown", !this.isShowCartDropdown);
