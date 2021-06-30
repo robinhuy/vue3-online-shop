@@ -222,7 +222,7 @@ export default {
     },
 
     addProductToCart() {
-      this.$store.dispatch("cart/addProductToCart", this.product);
+      this.$store.commit("cart/addProductToCart", this.product);
     },
 
     ...mapMutations("products", ["updateProductQuantity"]),

@@ -1,8 +1,7 @@
-import api from "@/services/cart.service";
+import api from "@/services/base.service";
 
 const state = () => ({
   products: [],
-  isLoading: false,
   addToCartResult: "",
   totalItems: 0,
   isShowCartDropdown: false,
@@ -24,48 +23,37 @@ const getters = {
   },
 };
 
-const actions = {
-  async addProductToCart({ state, commit }, product) {
-    const isExists = state.products.find((p) => p.id === product.id);
-
-    if (isExists) {
-      commit("setAddToCartResult", "This item was already in your cart.");
-    } else {
-      const newProduct = await api.addProductToCart(product);
-
-      if (newProduct) {
-        commit("setAddToCartResult", "Item successfully added to your cart.");
-        commit("addProductToCart", newProduct);
-      }
-    }
-
-    commit("setShowCartDropdown", true);
-  },
-
-  async getProductsInCart({ commit }) {
-    commit("setLoading", true);
-
-    const products = await api.getProductsInCart();
-
-    commit("setProducts", products);
-    commit("setLoading", false);
-  },
-};
+const actions = {};
 
 const mutations = {
   setShowCartDropdown(state, status) {
     state.isShowCartDropdown = status;
   },
 
-  setLoading(state, status) {
-    state.isLoading = status;
-  },
+  getProductsInCart(state) {
+    const products = JSON.parse(localStorage.getItem("cart")) || [];
 
-  setProducts(state, products) {
     state.products = products.map((product) => {
       product.totalPrice = product.quantity * product.price;
       return product;
     });
+  },
+
+  addProductToCart(state, product) {
+    const isExists = state.products.find((p) => p.id === product.id);
+
+    if (isExists) {
+      state.addToCartResult = "This item was already in your cart.";
+    } else {
+      state.addToCartResult = "Item successfully added to your cart.";
+
+      product.image = api.defaults.baseURL + product.image;
+      state.products.push(product);
+
+      localStorage.setItem("cart", JSON.stringify(state.products));
+    }
+
+    state.isShowCartDropdown = true;
   },
 
   updateProductQuantity(state, { productId, value }) {
@@ -80,14 +68,13 @@ const mutations = {
     }
 
     product.totalPrice = product.price * product.quantity;
+
+    localStorage.setItem("cart", JSON.stringify(state.products));
   },
 
-  addProductToCart(state, product) {
-    state.products.push(product);
-  },
-
-  setAddToCartResult(state, message) {
-    state.addToCartResult = message;
+  removeProduct(state, productId) {
+    state.products = state.products.filter((p) => p.id !== productId);
+    localStorage.setItem("cart", JSON.stringify(state.products));
   },
 };
 

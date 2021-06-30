@@ -168,7 +168,7 @@ export default {
   computed: mapState("users", ["isLoginSuccess", "user"]),
 
   created() {
-    this.$store.dispatch("cart/getProductsInCart");
+    this.$store.commit("cart/getProductsInCart");
   },
 
   methods: {

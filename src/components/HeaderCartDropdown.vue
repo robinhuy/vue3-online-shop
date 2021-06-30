@@ -12,7 +12,7 @@
       class="header-cart header-dropdown"
       :class="{ 'show-header-dropdown': isShowCartDropdown }"
     >
-      <p>{{ addToCartResult }}</p>
+      <p class="text-warning m-b-10">{{ addToCartResult }}</p>
 
       <ul class="header-cart-wrapitem">
         <li
@@ -36,9 +36,11 @@
         </li>
       </ul>
 
-      <div class="header-cart-total">Total: {{ currency(subTotal) }}</div>
+      <div v-if="totalItems > 0" class="header-cart-total">
+        Total: {{ currency(subTotal) }}
+      </div>
 
-      <div class="header-cart-buttons">
+      <div v-if="totalItems > 0" class="header-cart-buttons">
         <div class="header-cart-wrapbtn">
           <router-link
             to="/cart"
@@ -56,6 +58,17 @@
             Check Out
           </a>
         </div>
+      </div>
+
+      <div v-else class="header-cart-buttons">
+        <h4 class="text-center m-b-30">There are no products in your cart.</h4>
+
+        <router-link
+          to="/products"
+          class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4"
+        >
+          Shopping now
+        </router-link>
       </div>
     </div>
   </div>
